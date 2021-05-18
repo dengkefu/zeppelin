@@ -41,6 +41,9 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.Subject;
+import org.apache.zeppelin.actionLog.ActionType;
+import org.apache.zeppelin.actionLog.ActionUnit;
+import org.apache.zeppelin.actionLog.OperationLogDetail;
 import org.apache.zeppelin.annotation.ZeppelinApi;
 import org.apache.zeppelin.conf.ZeppelinConfiguration;
 import org.apache.zeppelin.notebook.AuthorizationService;
@@ -210,6 +213,7 @@ public class LoginRestApi {
    */
   @POST
   @ZeppelinApi
+  @OperationLogDetail(detail = "通过手机号[{{tel}}]获取用户名",level = 3,operationUnit = ActionUnit.USER,operationType = ActionType.SELECT)
   public Response postLogin(@FormParam("userName") String userName,
       @FormParam("password") String password) {
     LOG.debug("userName: {}", userName);

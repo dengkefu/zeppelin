@@ -939,7 +939,7 @@ public class ZeppelinConfiguration {
     ZEPPELIN_INTERPRETER_EXCLUDES("zeppelin.interpreter.exclude", ""),
 
     ZEPPELIN_ENCODING("zeppelin.encoding", "UTF-8"),
-    ZEPPELIN_NOTEBOOK_DIR("zeppelin.notebook.dir", "notebook"),
+    ZEPPELIN_NOTEBOOK_DIR("zeppelin.notebook.dir", "C:\\Users\\duncan.fu\\IdeaProjects\\tools\\zeppelin\\notebook"),
 
     ZEPPELIN_NOTEBOOK_RUN_ID("zeppelin.notebook.run.id", null),   // run particular note id on zeppelin start
     ZEPPELIN_NOTEBOOK_RUN_REV("zeppelin.notebook.run.rev", null), // revision id for ZEPPELIN_NOTEBOOK_RUN_ID.
