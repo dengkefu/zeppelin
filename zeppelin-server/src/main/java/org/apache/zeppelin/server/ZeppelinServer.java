@@ -73,6 +73,7 @@ import org.apache.zeppelin.interpreter.InterpreterSetting;
 import org.apache.zeppelin.interpreter.InterpreterSettingManager;
 import org.apache.zeppelin.interpreter.recovery.RecoveryStorage;
 import org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcessListener;
+import org.apache.zeppelin.jerseyLog.JerseyFeature;
 import org.apache.zeppelin.metric.JVMInfoBinder;
 import org.apache.zeppelin.metric.PrometheusServlet;
 import org.apache.zeppelin.notebook.NoteEventListener;
@@ -98,6 +99,7 @@ import org.apache.zeppelin.user.AuthenticationInfo;
 import org.apache.zeppelin.user.Credentials;
 import org.apache.zeppelin.util.ReflectionUtils;
 import org.apache.zeppelin.utils.PEMImporter;
+import org.eclipse.jetty.http.HttpGenerator;
 import org.eclipse.jetty.http.HttpScheme;
 import org.eclipse.jetty.http.HttpVersion;
 import org.eclipse.jetty.jmx.ConnectorServer;
@@ -127,8 +129,11 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.ComponentScan;
 
-/** Main class of Zeppelin. */
+/** Main class of Zeppelin.
+ * @author duncan.fu
+ */
 public class ZeppelinServer extends ResourceConfig {
   private static final Logger LOG = LoggerFactory.getLogger(ZeppelinServer.class);
   private static final String WEB_APP_CONTEXT_NEXT = "/next";
@@ -147,9 +152,14 @@ public class ZeppelinServer extends ResourceConfig {
 
   @Inject
   public ZeppelinServer() {
-    InterpreterOutput.LIMIT = conf.getInt(ConfVars.ZEPPELIN_INTERPRETER_OUTPUT_LIMIT);
-
+    // 资源包所在位置
     packages("org.apache.zeppelin.rest");
+    // 过滤器所在位置
+    packages("org.apache.zeppelin.jerseyLog");
+    // 注册过滤器
+    register(JerseyFeature.class);
+    // register(LogAspect.class);
+    InterpreterOutput.LIMIT = conf.getInt(ConfVars.ZEPPELIN_INTERPRETER_OUTPUT_LIMIT);
   }
 
   public static void main(String[] args) throws InterruptedException, IOException {
@@ -163,6 +173,7 @@ public class ZeppelinServer extends ResourceConfig {
 
     ContextHandlerCollection contexts = new ContextHandlerCollection();
     timedHandler.setHandler(contexts);
+
 
     sharedServiceLocator = ServiceLocatorFactory.getInstance().create("shared-locator");
     ServiceLocatorUtilities.enableImmediateScope(sharedServiceLocator);
@@ -256,7 +267,7 @@ public class ZeppelinServer extends ResourceConfig {
         throw new Exception(errorData.get(0).getThrowable());
       }
       if (conf.getJettyName() != null) {
-        org.eclipse.jetty.http.HttpGenerator.setJettyVersion(conf.getJettyName());
+        HttpGenerator.setJettyVersion(conf.getJettyName());
       }
     } catch (Exception e) {
       LOG.error("Error while running jettyServer", e);

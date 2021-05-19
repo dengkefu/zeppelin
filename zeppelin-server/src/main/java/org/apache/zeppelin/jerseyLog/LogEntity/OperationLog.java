@@ -1,4 +1,4 @@
-package org.apache.zeppelin.actionLog;
+package org.apache.zeppelin.jerseyLog.LogEntity;
 
 import java.util.Date;
 

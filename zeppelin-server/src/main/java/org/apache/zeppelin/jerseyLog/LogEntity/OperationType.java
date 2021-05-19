@@ -1,11 +1,11 @@
-package org.apache.zeppelin.actionLog;
+package org.apache.zeppelin.jerseyLog.LogEntity;
 
 /**
  * @author duncan.fu@foxmail.com
  * @date 2021/5/14 14:21
  * @desc TODO
  */
-public enum ActionType {
+public enum OperationType {
     /**
      * 操作类型
      */
@@ -25,7 +25,7 @@ public enum ActionType {
         this.value = value;
     }
 
-    ActionType(String s) {
+    OperationType(String s) {
         this.value = s;
     }
 }
