@@ -1308,9 +1308,9 @@ public class NotebookService {
     if (isAllowed) {
       return true;
     } else {
-      String errorMsg = "Insufficient privileges to " + permission + " note.\n" +
-          "Allowed users or roles: " + allowed + "\n" + "But the user " +
-          context.getAutheInfo().getUser() + " belongs to: " + context.getUserAndRoles();
+      String errorMsg = "访问权限不足 " + permission + ".\n" +
+          "允许访问的角色或用户为: " + allowed + "\n" + "当时当前用户 " +
+          context.getAutheInfo().getUser() + " 属于: " + context.getUserAndRoles();
       callback.onFailure(new ForbiddenException(errorMsg), context);
       return false;
     }
