@@ -21,8 +21,11 @@ import com.google.common.collect.Maps;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.zeppelin.actionLog.LoggerDetail;
+import org.apache.zeppelin.actionLog.UserLogger;
 import org.apache.zeppelin.annotation.ZeppelinApi;
 import org.apache.zeppelin.dep.Repository;
+import org.apache.zeppelin.entity.log.OperationType;
 import org.apache.zeppelin.interpreter.ExecutionContextBuilder;
 import org.apache.zeppelin.interpreter.InterpreterException;
 import org.apache.zeppelin.interpreter.InterpreterPropertyType;
@@ -56,10 +59,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Interpreter Rest API.
@@ -76,6 +76,8 @@ public class InterpreterRestApi {
   private final InterpreterService interpreterService;
   private final InterpreterSettingManager interpreterSettingManager;
   private final NotebookServer notebookServer;
+
+  static Map<String, String> dynamicValue = new HashMap<>();
 
   @Inject
   public InterpreterRestApi(
@@ -130,6 +132,8 @@ public class InterpreterRestApi {
   @POST
   @Path("setting")
   @ZeppelinApi
+  @UserLogger
+  @LoggerDetail(detail = "新增解释器", params = "", level = 6, operationType = OperationType.INSERT, obj = "INTERPRETER")
   public Response newSettings(String message) {
     try {
       NewInterpreterSettingRequest request =
@@ -142,6 +146,7 @@ public class InterpreterRestApi {
           .createNewSetting(request.getName(), request.getGroup(), request.getDependencies(),
               request.getOption(), request.getProperties());
       LOGGER.info("new setting created with {}", interpreterSetting.getId());
+
       return new JsonResponse<>(Status.OK, "", interpreterSetting).build();
     } catch (IOException e) {
       LOGGER.error("Exception in InterpreterRestApi while creating ", e);
@@ -153,6 +158,8 @@ public class InterpreterRestApi {
   @PUT
   @Path("setting/{settingId}")
   @ZeppelinApi
+  @UserLogger
+  @LoggerDetail(detail = "修改解释器", params = "", level = 6, operationType = OperationType.UPDATE, obj = "INTERPRETER")
   public Response updateSetting(String message, @PathParam("settingId") String settingId) {
     LOGGER.info("Update interpreterSetting {}", settingId);
 
@@ -184,6 +191,8 @@ public class InterpreterRestApi {
   @DELETE
   @Path("setting/{settingId}")
   @ZeppelinApi
+  @UserLogger
+  @LoggerDetail(detail = "删除解释器", params = "", level = 6, operationType = OperationType.DELETE, obj = "INTERPRETER")
   public Response removeSetting(@PathParam("settingId") String settingId) throws IOException {
     LOGGER.info("Remove interpreterSetting {}", settingId);
     interpreterSettingManager.remove(settingId);
@@ -196,6 +205,8 @@ public class InterpreterRestApi {
   @PUT
   @Path("setting/restart/{settingId}")
   @ZeppelinApi
+  @UserLogger
+  @LoggerDetail(detail = "重启解释器", params = "", level = 3, operationType = OperationType.SELECT, obj = "INTERPRETER")
   public Response restartSetting(String message, @PathParam("settingId") String settingId) {
     LOGGER.info("Restart interpreterSetting {}, msg={}", settingId, message);
 
@@ -263,6 +274,8 @@ public class InterpreterRestApi {
   @POST
   @Path("repository")
   @ZeppelinApi
+  @UserLogger
+  @LoggerDetail(detail = "新增解释器仓库", params = "", level = 3, operationType = OperationType.INSERT, obj = "REPOSITORY")
   public Response addRepository(String message) {
     try {
       Repository request = Repository.fromJson(message);
@@ -285,6 +298,8 @@ public class InterpreterRestApi {
   @DELETE
   @Path("repository/{repoId}")
   @ZeppelinApi
+  @UserLogger
+  @LoggerDetail(detail = "删除解释器仓库", params = "", level = 6, operationType = OperationType.DELETE, obj = "REPOSITORY")
   public Response removeRepository(@PathParam("repoId") String repoId) {
     LOGGER.info("Remove repository {}", repoId);
     try {
@@ -310,6 +325,8 @@ public class InterpreterRestApi {
   @POST
   @Path("install")
   @ZeppelinApi
+  @UserLogger
+  @LoggerDetail(detail = "安装解释器", params = "", level = 3, operationType = OperationType.INSERT, obj = "INTERPRETER")
   public Response installInterpreter(@NotNull String message) {
     LOGGER.info("Install interpreter: {}", message);
     InterpreterInstallationRequest request = InterpreterInstallationRequest.fromJson(message);

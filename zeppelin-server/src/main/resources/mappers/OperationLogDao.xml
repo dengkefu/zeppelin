@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.apache.zeppelin.dao.OperationLogDao">
+  <resultMap id="BaseResultMap" type="org.apache.zeppelin.entity.log.OperationLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="operation_unit" jdbcType="VARCHAR" property="operationUnit" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="host" jdbcType="VARCHAR" property="host" />
+    <result column="operation_type" jdbcType="VARCHAR" property="operationType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, "level", operation_unit, "method", "describe", "host", operation_type, 
+    create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ncc_view.operation_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ncc_view.operation_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.apache.zeppelin.entity.log.OperationLog" useGeneratedKeys="true">
+    insert into ncc_view.operation_log (user_id, "level", operation_unit, 
+      "method", "describe", "host", 
+      operation_type, create_time)
+    values (#{userId,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{operationUnit,jdbcType=VARCHAR}, 
+      #{method,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, 
+      #{operationType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.apache.zeppelin.entity.log.OperationLog" useGeneratedKeys="true">
+    insert into ncc_view.operation_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="level != null">
+        "level",
+      </if>
+      <if test="operationUnit != null">
+        operation_unit,
+      </if>
+      <if test="method != null">
+        "method",
+      </if>
+      <if test="describe != null">
+        "describe",
+      </if>
+      <if test="host != null">
+        "host",
+      </if>
+      <if test="operationType != null">
+        operation_type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="operationUnit != null">
+        #{operationUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="host != null">
+        #{host,jdbcType=VARCHAR},
+      </if>
+      <if test="operationType != null">
+        #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.apache.zeppelin.entity.log.OperationLog">
+    update ncc_view.operation_log
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        "level" = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="operationUnit != null">
+        operation_unit = #{operationUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        "method" = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        "describe" = #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="host != null">
+        "host" = #{host,jdbcType=VARCHAR},
+      </if>
+      <if test="operationType != null">
+        operation_type = #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.apache.zeppelin.entity.log.OperationLog">
+    update ncc_view.operation_log
+    set user_id = #{userId,jdbcType=VARCHAR},
+      "level" = #{level,jdbcType=VARCHAR},
+      operation_unit = #{operationUnit,jdbcType=VARCHAR},
+      "method" = #{method,jdbcType=VARCHAR},
+      "describe" = #{describe,jdbcType=VARCHAR},
+      "host" = #{host,jdbcType=VARCHAR},
+      operation_type = #{operationType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

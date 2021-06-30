@@ -23,9 +23,11 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.Subject;
+import org.apache.zeppelin.actionLog.LoggerDetail;
+import org.apache.zeppelin.actionLog.UserLogger;
 import org.apache.zeppelin.annotation.ZeppelinApi;
 import org.apache.zeppelin.conf.ZeppelinConfiguration;
-import org.apache.zeppelin.jerseyLog.ActionLog;
+import org.apache.zeppelin.entity.log.OperationType;
 import org.apache.zeppelin.notebook.AuthorizationService;
 import org.apache.zeppelin.notebook.Notebook;
 import org.apache.zeppelin.realm.jwt.JWTAuthenticationToken;
@@ -207,7 +209,8 @@ public class LoginRestApi {
      */
     @POST
     @ZeppelinApi
-    @ActionLog
+    @UserLogger
+    @LoggerDetail(detail = "用户登录", params = "", level = 1, operationType = OperationType.SELECT, obj = "SYSTEM")
     public Response postLogin(@FormParam("userName") String userName,
                               @FormParam("password") String password) {
         LOG.debug("userName: {}", userName);

@@ -25,6 +25,9 @@ import javax.inject.Singleton;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.zeppelin.actionLog.LoggerDetail;
+import org.apache.zeppelin.actionLog.UserLogger;
+import org.apache.zeppelin.entity.log.OperationType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -148,6 +151,8 @@ public class HeliumRestApi {
 
   @POST
   @Path("load/{noteId}/{paragraphId}")
+  @UserLogger
+  @LoggerDetail(detail = "下载视图图表", params = "", level = 5, operationType = OperationType.SELECT, obj = "NOTEBOOK")
   public Response load(@PathParam("noteId") String noteId,
           @PathParam("paragraphId") String paragraphId, String heliumPackage) {
     Note note = null;
@@ -223,6 +228,8 @@ public class HeliumRestApi {
 
   @POST
   @Path("enable/{packageName}")
+  @UserLogger
+  @LoggerDetail(detail = "启动helium视图展示器", params = "", level = 4, operationType = OperationType.SELECT, obj = "HELIUM")
   public Response enablePackage(@PathParam("packageName") String packageName, String artifact) {
     try {
       if (helium.enable(packageName, artifact)) {
@@ -238,6 +245,8 @@ public class HeliumRestApi {
 
   @POST
   @Path("disable/{packageName}")
+  @UserLogger
+  @LoggerDetail(detail = "停止helium视图展示器", params = "", level = 3, operationType = OperationType.SELECT, obj = "HELIUM")
   public Response disablePackage(@PathParam("packageName") String packageName) {
     try {
       if (helium.disable(packageName)) {
@@ -314,6 +323,8 @@ public class HeliumRestApi {
 
   @POST
   @Path("config/{packageName}/{artifact}")
+  @UserLogger
+  @LoggerDetail(detail = "配置helium视图展示器", params = "", level = 5, operationType = OperationType.SELECT, obj = "HELIUM")
   public Response updatePackageConfig(@PathParam("packageName") String packageName,
           @PathParam("artifact") String artifact, String rawConfig) {
     if (StringUtils.isEmpty(packageName) || StringUtils.isEmpty(artifact)) {
@@ -351,6 +362,8 @@ public class HeliumRestApi {
 
   @POST
   @Path("order/visualization")
+  @UserLogger
+  @LoggerDetail(detail = "应用helium视图展示器", params = "", level = 3, operationType = OperationType.SELECT, obj = "NOTEBOOK")
   public Response setVisualizationPackageOrder(String orderedPackageNameList) {
     List<String> orderedList = gson.fromJson(
         orderedPackageNameList, new TypeToken<List<String>>(){}.getType());

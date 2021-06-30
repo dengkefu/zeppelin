@@ -27,7 +27,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.zeppelin.actionLog.LoggerDetail;
+import org.apache.zeppelin.actionLog.UserLogger;
 import org.apache.zeppelin.annotation.ZeppelinApi;
+import org.apache.zeppelin.entity.log.OperationType;
 import org.apache.zeppelin.rest.message.LoggerRequest;
 import org.apache.zeppelin.service.AdminService;
 import org.slf4j.Logger;
@@ -70,6 +73,8 @@ public class AdminRestApi {
    */
   @POST
   @ZeppelinApi
+  @UserLogger
+  @LoggerDetail(detail = "修改日志级别", params = "", level = 3, operationType = OperationType.UPDATE, obj = "SYSTEM")
   public List<org.apache.log4j.Logger> setLoggerLevel(LoggerRequest loggerRequest) {
     if (null == loggerRequest
         || StringUtils.isEmpty(loggerRequest.getName())

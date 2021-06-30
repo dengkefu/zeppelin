@@ -23,6 +23,9 @@ import com.google.gson.JsonSyntaxException;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.zeppelin.actionLog.LoggerDetail;
+import org.apache.zeppelin.actionLog.UserLogger;
+import org.apache.zeppelin.entity.log.OperationType;
 import org.apache.zeppelin.service.AuthenticationService;
 import org.apache.zeppelin.service.ServiceContext;
 import org.slf4j.Logger;
@@ -115,6 +118,8 @@ public class NotebookRepoRestApi {
    */
   @PUT
   @ZeppelinApi
+  @UserLogger
+  @LoggerDetail(detail = "更新notebook仓库", params = "", level = 1, operationType = OperationType.SELECT, obj = "SYSTEM")
   public Response updateRepoSetting(String payload) {
     if (StringUtils.isBlank(payload)) {
       return new JsonResponse<>(Status.NOT_FOUND, "", Collections.emptyMap()).build();

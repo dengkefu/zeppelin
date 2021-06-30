@@ -1,4 +1,4 @@
-package org.apache.zeppelin.jerseyLog.LogEntity;
+package org.apache.zeppelin.entity.log;
 
 /**
  * @author duncan.fu@foxmail.com

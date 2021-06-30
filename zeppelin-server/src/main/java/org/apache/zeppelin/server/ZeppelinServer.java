@@ -19,9 +19,6 @@ package org.apache.zeppelin.server;
 import com.codahale.metrics.servlets.HealthCheckServlet;
 import com.codahale.metrics.servlets.PingServlet;
 import com.google.gson.Gson;
-
-import static org.apache.zeppelin.server.HtmlAddonResource.HTML_ADDON_IDENTIFIER;
-
 import io.micrometer.core.instrument.Clock;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.Tags;
@@ -39,25 +36,10 @@ import io.micrometer.jmx.JmxConfig;
 import io.micrometer.jmx.JmxMeterRegistry;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
-
-import java.io.File;
-import java.io.IOException;
-import java.lang.management.ManagementFactory;
-import java.nio.file.Files;
-import java.security.GeneralSecurityException;
-import java.util.Base64;
-import java.util.HashSet;
-import java.util.List;
-import java.util.EnumSet;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import javax.management.remote.JMXServiceURL;
-import javax.servlet.DispatcherType;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.apache.shiro.web.servlet.ShiroFilter;
+import org.apache.zeppelin.actionLog.LoggerFilter;
 import org.apache.zeppelin.cluster.ClusterManagerServer;
 import org.apache.zeppelin.conf.ZeppelinConfiguration;
 import org.apache.zeppelin.conf.ZeppelinConfiguration.ConfVars;
@@ -73,14 +55,9 @@ import org.apache.zeppelin.interpreter.InterpreterSetting;
 import org.apache.zeppelin.interpreter.InterpreterSettingManager;
 import org.apache.zeppelin.interpreter.recovery.RecoveryStorage;
 import org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcessListener;
-import org.apache.zeppelin.jerseyLog.JerseyFeature;
 import org.apache.zeppelin.metric.JVMInfoBinder;
 import org.apache.zeppelin.metric.PrometheusServlet;
-import org.apache.zeppelin.notebook.NoteEventListener;
-import org.apache.zeppelin.notebook.NoteManager;
-import org.apache.zeppelin.notebook.Notebook;
-import org.apache.zeppelin.notebook.AuthorizationService;
-import org.apache.zeppelin.notebook.Paragraph;
+import org.apache.zeppelin.notebook.*;
 import org.apache.zeppelin.notebook.repo.NotebookRepo;
 import org.apache.zeppelin.notebook.repo.NotebookRepoSync;
 import org.apache.zeppelin.notebook.scheduler.NoSchedulerService;
@@ -92,7 +69,6 @@ import org.apache.zeppelin.search.LuceneSearch;
 import org.apache.zeppelin.search.NoSearchService;
 import org.apache.zeppelin.search.SearchService;
 import org.apache.zeppelin.service.*;
-import org.apache.zeppelin.service.AuthenticationService;
 import org.apache.zeppelin.socket.ConnectionManager;
 import org.apache.zeppelin.socket.NotebookServer;
 import org.apache.zeppelin.user.AuthenticationInfo;
@@ -104,13 +80,7 @@ import org.eclipse.jetty.http.HttpScheme;
 import org.eclipse.jetty.http.HttpVersion;
 import org.eclipse.jetty.jmx.ConnectorServer;
 import org.eclipse.jetty.jmx.MBeanContainer;
-import org.eclipse.jetty.server.ForwardedRequestCustomizer;
-import org.eclipse.jetty.server.HttpConfiguration;
-import org.eclipse.jetty.server.HttpConnectionFactory;
-import org.eclipse.jetty.server.SecureRequestCustomizer;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.SslConnectionFactory;
+import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
@@ -127,13 +97,34 @@ import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletProperties;
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import javax.management.remote.JMXServiceURL;
+import javax.servlet.DispatcherType;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import java.io.File;
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.nio.file.Files;
+import java.security.GeneralSecurityException;
+import java.util.Base64;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.List;
+
+import static org.apache.zeppelin.server.HtmlAddonResource.HTML_ADDON_IDENTIFIER;
 
 /** Main class of Zeppelin.
  * @author duncan.fu
  */
+@Component
+@MapperScan({"org.apache.zeppelin.dao"})
 public class ZeppelinServer extends ResourceConfig {
   private static final Logger LOG = LoggerFactory.getLogger(ZeppelinServer.class);
   private static final String WEB_APP_CONTEXT_NEXT = "/next";
@@ -154,10 +145,8 @@ public class ZeppelinServer extends ResourceConfig {
   public ZeppelinServer() {
     // 资源包所在位置
     packages("org.apache.zeppelin.rest");
-    // 过滤器所在位置
-    packages("org.apache.zeppelin.jerseyLog");
     // 注册过滤器
-    register(JerseyFeature.class);
+    register(LoggerFilter.class);
     // register(LogAspect.class);
     InterpreterOutput.LIMIT = conf.getInt(ConfVars.ZEPPELIN_INTERPRETER_OUTPUT_LIMIT);
   }
@@ -170,6 +159,8 @@ public class ZeppelinServer extends ResourceConfig {
 
     TimedHandler timedHandler = new TimedHandler(Metrics.globalRegistry, Tags.empty());
     jettyWebServer.setHandler(timedHandler);
+
+
 
     ContextHandlerCollection contexts = new ContextHandlerCollection();
     timedHandler.setHandler(contexts);
