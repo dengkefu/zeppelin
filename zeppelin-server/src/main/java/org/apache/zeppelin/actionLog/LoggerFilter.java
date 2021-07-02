@@ -1,33 +1,24 @@
 package org.apache.zeppelin.actionLog;
 
-import com.mchange.v2.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.zeppelin.entity.log.OperationLog;
 import org.apache.zeppelin.entity.log.OperationType;
 import org.apache.zeppelin.service.OperationLogService;
 import org.apache.zeppelin.threadUtils.CustomThreadPoolExecutor;
-import org.glassfish.jersey.message.internal.MediaTypes;
-import org.glassfish.jersey.server.ContainerRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Priority;
 import javax.annotation.Resource;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;

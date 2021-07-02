@@ -22,10 +22,6 @@
     from ncc_view.operation_log
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ncc_view.operation_log
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.apache.zeppelin.entity.log.OperationLog" useGeneratedKeys="true">
     insert into ncc_view.operation_log (user_id, "level", operation_unit, 
       "method", "describe", "host", 
@@ -89,46 +85,4 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.apache.zeppelin.entity.log.OperationLog">
-    update ncc_view.operation_log
-    <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="level != null">
-        "level" = #{level,jdbcType=VARCHAR},
-      </if>
-      <if test="operationUnit != null">
-        operation_unit = #{operationUnit,jdbcType=VARCHAR},
-      </if>
-      <if test="method != null">
-        "method" = #{method,jdbcType=VARCHAR},
-      </if>
-      <if test="describe != null">
-        "describe" = #{describe,jdbcType=VARCHAR},
-      </if>
-      <if test="host != null">
-        "host" = #{host,jdbcType=VARCHAR},
-      </if>
-      <if test="operationType != null">
-        operation_type = #{operationType,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.apache.zeppelin.entity.log.OperationLog">
-    update ncc_view.operation_log
-    set user_id = #{userId,jdbcType=VARCHAR},
-      "level" = #{level,jdbcType=VARCHAR},
-      operation_unit = #{operationUnit,jdbcType=VARCHAR},
-      "method" = #{method,jdbcType=VARCHAR},
-      "describe" = #{describe,jdbcType=VARCHAR},
-      "host" = #{host,jdbcType=VARCHAR},
-      operation_type = #{operationType,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>
