@@ -24,13 +24,12 @@ import org.apache.zeppelin.conf.ZeppelinConfiguration;
 import org.apache.zeppelin.interpreter.InterpreterOption;
 import org.apache.zeppelin.interpreter.InterpreterRunner;
 import org.apache.zeppelin.interpreter.recovery.RecoveryStorage;
-import org.apache.zeppelin.interpreter.remote.ExecRemoteInterpreterProcess;
+import org.apache.zeppelin.interpreter.remote.RemoteInterpreterManagedProcess;
 import org.apache.zeppelin.interpreter.remote.RemoteInterpreterRunningProcess;
 import org.apache.zeppelin.interpreter.remote.RemoteInterpreterUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -69,14 +68,14 @@ public class StandardInterpreterLauncher extends InterpreterLauncher {
           false);
     } else {
       // create new remote process
-      String localRepoPath = zConf.getInterpreterLocalRepoPath() + File.separator
+      String localRepoPath = zConf.getInterpreterLocalRepoPath() + "/"
           + context.getInterpreterSettingId();
-      return new ExecRemoteInterpreterProcess(
+      return new RemoteInterpreterManagedProcess(
+          runner != null ? runner.getPath() : zConf.getInterpreterRemoteRunnerPath(),
           context.getIntpEventServerPort(), context.getIntpEventServerHost(), zConf.getInterpreterPortRange(),
           zConf.getInterpreterDir() + "/" + groupName, localRepoPath,
           buildEnvFromProperties(context), connectTimeout, connectionPoolSize, name,
-          context.getInterpreterGroupId(), option.isUserImpersonate(),
-          runner != null ? runner.getPath() : zConf.getInterpreterRemoteRunnerPath());
+          context.getInterpreterGroupId(), option.isUserImpersonate());
     }
   }
 

@@ -42,11 +42,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.zeppelin.actionLog.LoggerDetail;
-import org.apache.zeppelin.actionLog.UserLogger;
 import org.apache.zeppelin.annotation.ZeppelinApi;
 import org.apache.zeppelin.conf.ZeppelinConfiguration;
-import org.apache.zeppelin.entity.log.OperationType;
 import org.apache.zeppelin.interpreter.InterpreterResult;
 import org.apache.zeppelin.notebook.Note;
 import org.apache.zeppelin.notebook.NoteInfo;
@@ -243,8 +240,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @PUT
   @Path("{noteId}/permissions")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "更改notebook权限", params = "", level = 5, operationType = OperationType.UPDATE, obj = "NOTEBOOK")
   public Response putNotePermissions(@PathParam("noteId") String noteId, String req)
       throws IOException {
 
@@ -371,8 +366,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @POST
   @Path("import")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "导入notebook", params = "", level = 3, operationType = OperationType.INSERT, obj = "NOTEBOOK")
   public Response importNote(@QueryParam("notePath") String notePath, String noteJson) throws IOException {
     Note note = notebookService.importNote(notePath, noteJson, getServiceContext(),
             new RestServiceCallback());
@@ -388,8 +381,6 @@ public class NotebookRestApi extends AbstractRestApi {
    */
   @POST
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "创建视图展示页notebook", params = "", level = 5, operationType = OperationType.INSERT, obj = "NOTEBOOK")
   public Response createNote(String message) throws IOException {
     String user = authenticationService.getPrincipal();
     LOGGER.info("Creating new note by JSON {}", message);
@@ -411,7 +402,7 @@ public class NotebookRestApi extends AbstractRestApi {
         initParagraph(p, paragraphRequest, user);
       }
     }
-    return new JsonResponse<>(Status.OK, "", note.getId()).build();
+    return new JsonResponse(Status.OK, "", note.getId()).build();
   }
 
   /**
@@ -424,8 +415,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @DELETE
   @Path("{noteId}")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "删除视图展示页notebook", params = "", level = 7, operationType = OperationType.DELETE, obj = "NOTEBOOK")
   public Response deleteNote(@PathParam("noteId") String noteId) throws IOException {
     LOGGER.info("Delete note {} ", noteId);
     notebookService.removeNote(noteId,
@@ -452,8 +441,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @POST
   @Path("{noteId}")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "克隆视图展示页notebook", params = "", level = 4, operationType = OperationType.INSERT, obj = "NOTEBOOK")
   public Response cloneNote(@PathParam("noteId") String noteId, String message)
       throws IOException, IllegalArgumentException {
 
@@ -486,8 +473,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @PUT
   @Path("{noteId}/rename")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "重命名视图展示页notebook", params = "", level = 1, operationType = OperationType.UPDATE, obj = "NOTEBOOK")
   public Response renameNote(@PathParam("noteId") String noteId,
                              String message) throws IOException {
 
@@ -506,7 +491,7 @@ public class NotebookRestApi extends AbstractRestApi {
                 notebookServer.broadcastNoteList(context.getAutheInfo(), context.getUserAndRoles());
               }
             });
-    return new JsonResponse<>(Status.OK, "").build();
+    return new JsonResponse(Status.OK, "").build();
   }
 
   /**
@@ -519,8 +504,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @POST
   @Path("{noteId}/paragraph")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "新增展示图例", params = "", level = 3, operationType = OperationType.INSERT, obj = "PARAGRAPH")
   public Response insertParagraph(@PathParam("noteId") String noteId, String message)
       throws IOException {
 
@@ -575,8 +558,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @PUT
   @Path("{noteId}/paragraph/{paragraphId}")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "更改展示图例", params = "", level = 5, operationType = OperationType.UPDATE, obj = "PARAGRAPH")
   public Response updateParagraph(@PathParam("noteId") String noteId,
                                   @PathParam("paragraphId") String paragraphId,
                                   String message) throws IOException {
@@ -614,8 +595,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @PUT
   @Path("{noteId}/paragraph/{paragraphId}/config")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "更改展示图例配置信息", params = "", level = 5, operationType = OperationType.UPDATE, obj = "PARAGRAPH")
   public Response updateParagraphConfig(@PathParam("noteId") String noteId,
                                         @PathParam("paragraphId") String paragraphId,
                                         String message) throws IOException {
@@ -646,8 +625,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @POST
   @Path("{noteId}/paragraph/{paragraphId}/move/{newIndex}")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "移动展示图例", params = "", level = 6, operationType = OperationType.UPDATE, obj = "PARAGRAPH")
   public Response moveParagraph(@PathParam("noteId") String noteId,
                                 @PathParam("paragraphId") String paragraphId,
                                 @PathParam("newIndex") String newIndex)
@@ -662,7 +639,7 @@ public class NotebookRestApi extends AbstractRestApi {
                 notebookServer.broadcastNote(result.getNote());
               }
             });
-    return new JsonResponse<>(Status.OK, "").build();
+    return new JsonResponse(Status.OK, "").build();
   }
 
   /**
@@ -675,8 +652,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @DELETE
   @Path("{noteId}/paragraph/{paragraphId}")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "删除展示图例", params = "", level = 6, operationType = OperationType.DELETE, obj = "PARAGRAPH")
   public Response deleteParagraph(@PathParam("noteId") String noteId,
                                   @PathParam("paragraphId") String paragraphId) throws IOException {
 
@@ -689,7 +664,7 @@ public class NotebookRestApi extends AbstractRestApi {
               }
             });
 
-    return new JsonResponse<>(Status.OK, "").build();
+    return new JsonResponse(Status.OK, "").build();
   }
 
   @POST
@@ -700,7 +675,7 @@ public class NotebookRestApi extends AbstractRestApi {
     Paragraph p = notebookService.getNextSessionParagraph(noteId, maxParagraph,
             getServiceContext(),
             new RestServiceCallback<>());
-    return new JsonResponse<>(Status.OK, p.getId()).build();
+    return new JsonResponse(Status.OK, p.getId()).build();
   }
 
   /**
@@ -712,14 +687,12 @@ public class NotebookRestApi extends AbstractRestApi {
   @PUT
   @Path("{noteId}/clear")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "清除所有展示图例", params = "", level = 8, operationType = OperationType.DELETE, obj = "PARAGRAPH")
   public Response clearAllParagraphOutput(@PathParam("noteId") String noteId)
       throws IOException {
     LOGGER.info("Clear all paragraph output of note {}", noteId);
     notebookService.clearAllParagraphOutput(noteId, getServiceContext(),
             new RestServiceCallback<>());
-    return new JsonResponse<>(Status.OK, "").build();
+    return new JsonResponse(Status.OK, "").build();
   }
 
   /**
@@ -736,8 +709,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @POST
   @Path("job/{noteId}")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "运行视图展示页的job任务", params = "", level = 4, operationType = OperationType.SELECT, obj = "NOTEBOOK")
   public Response runNoteJobs(@PathParam("noteId") String noteId,
                               @QueryParam("blocking") Boolean blocking,
                               @QueryParam("isolated") Boolean isolated,
@@ -780,8 +751,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @DELETE
   @Path("job/{noteId}")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "删除视图展示页的job任务", params = "", level = 4, operationType = OperationType.DELETE, obj = "NOTEBOOK")
   public Response stopNoteJobs(@PathParam("noteId") String noteId)
       throws IOException, IllegalArgumentException {
 
@@ -859,8 +828,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @POST
   @Path("job/{noteId}/{paragraphId}")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "运行视图展示页的job任务", params = "", level = 3, operationType = OperationType.SELECT, obj = "SYSTEM")
   public Response runParagraph(@PathParam("noteId") String noteId,
                                @PathParam("paragraphId") String paragraphId,
                                @QueryParam("sessionId") String sessionId,
@@ -900,8 +867,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @POST
   @Path("run/{noteId}/{paragraphId}")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "按序运行视图展示脚本", params = "", level = 3, operationType = OperationType.SELECT, obj = "PARAGRAPH")
   public Response runParagraphSynchronously(@PathParam("noteId") String noteId,
                                             @PathParam("paragraphId") String paragraphId,
                                             @QueryParam("sessionId") String sessionId,
@@ -945,8 +910,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @DELETE
   @Path("job/{noteId}/{paragraphId}")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "删除视图展示图例的job任务", params = "", level = 6, operationType = OperationType.DELETE, obj = "PARAGRAPH")
   public Response cancelParagraph(@PathParam("noteId") String noteId,
                                   @PathParam("paragraphId") String paragraphId)
       throws IOException, IllegalArgumentException {
@@ -967,8 +930,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @POST
   @Path("cron/{noteId}")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "为视图配置定时任务", params = "", level = 3, operationType = OperationType.INSERT, obj = "NOTEBOOK")
   public Response registerCronJob(@PathParam("noteId") String noteId, String message)
       throws IOException, IllegalArgumentException {
 
@@ -1005,8 +966,6 @@ public class NotebookRestApi extends AbstractRestApi {
   @DELETE
   @Path("cron/{noteId}")
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "删除视图的定时任务", params = "", level = 5, operationType = OperationType.DELETE, obj = "NOTEBOOK")
   public Response removeCronJob(@PathParam("noteId") String noteId)
       throws IOException, IllegalArgumentException {
 

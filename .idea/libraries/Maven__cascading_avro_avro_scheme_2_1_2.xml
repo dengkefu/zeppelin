@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: cascading.avro:avro-scheme:2.1.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/cascading/avro/avro-scheme/2.1.2/avro-scheme-2.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/cascading/avro/avro-scheme/2.1.2/avro-scheme-2.1.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/cascading/avro/avro-scheme/2.1.2/avro-scheme-2.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

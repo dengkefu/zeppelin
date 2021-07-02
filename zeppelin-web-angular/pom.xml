@@ -18,14 +18,14 @@
   <parent>
     <artifactId>zeppelin</artifactId>
     <groupId>org.apache.zeppelin</groupId>
-    <version>0.9.1-SNAPSHOT</version>
+    <version>0.9.0</version>
     <relativePath>..</relativePath>
   </parent>
 
   <groupId>org.apache.zeppelin</groupId>
   <artifactId>zeppelin-web-angular</artifactId>
   <packaging>war</packaging>
-  <version>0.9.1-SNAPSHOT</version>
+  <version>0.9.0</version>
   <name>Zeppelin: web angular Application</name>
 
   <!-- See https://github.com/eirslett/frontend-maven-plugin/issues/229 -->
@@ -43,15 +43,6 @@
     <plugin.frontend.nodeDownloadRoot>https://nodejs.org/dist/</plugin.frontend.nodeDownloadRoot>
     <plugin.frontend.npmDownloadRoot>https://registry.npmjs.org/npm/-/</plugin.frontend.npmDownloadRoot>
   </properties>
-
-  <dependencies>
-      <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
-      <dependency>
-        <groupId>org.mybatis</groupId>
-        <artifactId>mybatis</artifactId>
-        <version>3.4.6</version>
-      </dependency>
-  </dependencies>
 
   <build>
     <plugins>

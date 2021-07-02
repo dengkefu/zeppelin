@@ -38,7 +38,7 @@ public class IRInterpreterTest extends IRKernelTest {
     InterpreterContext context = InterpreterContext.builder()
             .setNoteId("note_1")
             .setParagraphId("paragraph_1")
-            .setInterpreterOut(new InterpreterOutput())
+            .setInterpreterOut(new InterpreterOutput(null))
             .setLocalProperties(new HashMap<>())
             .build();
     return context;

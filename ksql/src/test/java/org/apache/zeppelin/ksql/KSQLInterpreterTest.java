@@ -53,7 +53,7 @@ public class KSQLInterpreterTest {
   @Before
   public void setUpZeppelin() throws IOException {
     context = InterpreterContext.builder()
-        .setInterpreterOut(new InterpreterOutput())
+        .setInterpreterOut(new InterpreterOutput(null))
         .setParagraphId("ksql-test")
         .build();
   }

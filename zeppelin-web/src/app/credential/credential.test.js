@@ -45,7 +45,7 @@ describe('Controller: Credential', function() {
       [{entity: 'spark.testCredential', username: 'user1', password: 'password1'}]
     );
     expect($scope.availableInterpreters).toEqual(
-      ['spark', 'md']
+      ['spark.spark', 'md.md']
     );
 
     $httpBackend.verifyNoOutstandingExpectation();

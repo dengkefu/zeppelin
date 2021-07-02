@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/flink/flink-parent.iml" filepath="$PROJECT_DIR$/flink/flink-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flink/flink-shims/flink-shims.iml" filepath="$PROJECT_DIR$/flink/flink-shims/flink-shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flink/flink1.10-shims/flink1.10-shims.iml" filepath="$PROJECT_DIR$/flink/flink1.10-shims/flink1.10-shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flink/flink1.11-shims/flink1.11-shims.iml" filepath="$PROJECT_DIR$/flink/flink1.11-shims/flink1.11-shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flink/flink1.12-shims/flink1.12-shims.iml" filepath="$PROJECT_DIR$/flink/flink1.12-shims/flink1.12-shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/launcher/cluster/launcher-cluster.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/launcher/cluster/launcher-cluster.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/launcher/docker/launcher-docker.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/launcher/docker/launcher-docker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/launcher/flink/launcher-flink.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/launcher/flink/launcher-flink.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/launcher/k8s-standard/launcher-k8s-standard.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/launcher/k8s-standard/launcher-k8s-standard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/launcher/yarn/launcher-yarn.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/launcher/yarn/launcher-yarn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/notebookrepo/azure/notebookrepo-azure.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/notebookrepo/azure/notebookrepo-azure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/notebookrepo/filesystem/notebookrepo-filesystem.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/notebookrepo/filesystem/notebookrepo-filesystem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/notebookrepo/gcs/notebookrepo-gcs.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/notebookrepo/gcs/notebookrepo-gcs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/notebookrepo/github/notebookrepo-github.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/notebookrepo/github/notebookrepo-github.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/notebookrepo/mongo/notebookrepo-mongo.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/notebookrepo/mongo/notebookrepo-mongo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/notebookrepo/oss/notebookrepo-oss.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/notebookrepo/oss/notebookrepo-oss.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/notebookrepo/s3/notebookrepo-s3.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/notebookrepo/s3/notebookrepo-s3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/notebookrepo/zeppelin-hub/notebookrepo-zeppelin-hub.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/notebookrepo/zeppelin-hub/notebookrepo-zeppelin-hub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rlang/r.iml" filepath="$PROJECT_DIR$/rlang/r.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sap/sap.iml" filepath="$PROJECT_DIR$/sap/sap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark/interpreter/spark-interpreter.iml" filepath="$PROJECT_DIR$/spark/interpreter/spark-interpreter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark/spark-parent.iml" filepath="$PROJECT_DIR$/spark/spark-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark/scala-2.10/spark-scala-2.10.iml" filepath="$PROJECT_DIR$/spark/scala-2.10/spark-scala-2.10.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark/scala-2.11/spark-scala-2.11.iml" filepath="$PROJECT_DIR$/spark/scala-2.11/spark-scala-2.11.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark/scala-2.12/spark-scala-2.12.iml" filepath="$PROJECT_DIR$/spark/scala-2.12/spark-scala-2.12.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark/spark-scala-parent/spark-scala-parent.iml" filepath="$PROJECT_DIR$/spark/spark-scala-parent/spark-scala-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark/spark-shims/spark-shims.iml" filepath="$PROJECT_DIR$/spark/spark-shims/spark-shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark/spark1-shims/spark1-shims.iml" filepath="$PROJECT_DIR$/spark/spark1-shims/spark1-shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark/spark2-shims/spark2-shims.iml" filepath="$PROJECT_DIR$/spark/spark2-shims/spark2-shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark/spark3-shims/spark3-shims.iml" filepath="$PROJECT_DIR$/spark/spark3-shims/spark3-shims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-plugins/zengine-plugins-parent.iml" filepath="$PROJECT_DIR$/zeppelin-plugins/zengine-plugins-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin.iml" filepath="$PROJECT_DIR$/zeppelin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/alluxio/zeppelin-alluxio.iml" filepath="$PROJECT_DIR$/alluxio/zeppelin-alluxio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/angular/zeppelin-angular.iml" filepath="$PROJECT_DIR$/angular/zeppelin-angular.iml" />
+      <module fileurl="file://$PROJECT_DIR$/beam/zeppelin-beam.iml" filepath="$PROJECT_DIR$/beam/zeppelin-beam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bigquery/zeppelin-bigquery.iml" filepath="$PROJECT_DIR$/bigquery/zeppelin-bigquery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cassandra/zeppelin-cassandra.iml" filepath="$PROJECT_DIR$/cassandra/zeppelin-cassandra.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-client/zeppelin-client.iml" filepath="$PROJECT_DIR$/zeppelin-client/zeppelin-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-client-examples/zeppelin-client-examples.iml" filepath="$PROJECT_DIR$/zeppelin-client-examples/zeppelin-client-examples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-common/zeppelin-common.iml" filepath="$PROJECT_DIR$/zeppelin-common/zeppelin-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-display/zeppelin-display.iml" filepath="$PROJECT_DIR$/zeppelin-display/zeppelin-display.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-distribution/zeppelin-distribution.iml" filepath="$PROJECT_DIR$/zeppelin-distribution/zeppelin-distribution.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elasticsearch/zeppelin-elasticsearch.iml" filepath="$PROJECT_DIR$/elasticsearch/zeppelin-elasticsearch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/file/zeppelin-file.iml" filepath="$PROJECT_DIR$/file/zeppelin-file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flink/interpreter/zeppelin-flink.iml" filepath="$PROJECT_DIR$/flink/interpreter/zeppelin-flink.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flink-cmd/zeppelin-flink-cmd.iml" filepath="$PROJECT_DIR$/flink-cmd/zeppelin-flink-cmd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/geode/zeppelin-geode.iml" filepath="$PROJECT_DIR$/geode/zeppelin-geode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/groovy/zeppelin-groovy.iml" filepath="$PROJECT_DIR$/groovy/zeppelin-groovy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hazelcastjet/zeppelin-hazelcastjet.iml" filepath="$PROJECT_DIR$/hazelcastjet/zeppelin-hazelcastjet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hbase/zeppelin-hbase.iml" filepath="$PROJECT_DIR$/hbase/zeppelin-hbase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ignite/zeppelin-ignite.iml" filepath="$PROJECT_DIR$/ignite/zeppelin-ignite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/influxdb/zeppelin-influxdb.iml" filepath="$PROJECT_DIR$/influxdb/zeppelin-influxdb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-interpreter/zeppelin-interpreter.iml" filepath="$PROJECT_DIR$/zeppelin-interpreter/zeppelin-interpreter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-interpreter-parent/zeppelin-interpreter-parent.iml" filepath="$PROJECT_DIR$/zeppelin-interpreter-parent/zeppelin-interpreter-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-interpreter-shaded/zeppelin-interpreter-shaded.iml" filepath="$PROJECT_DIR$/zeppelin-interpreter-shaded/zeppelin-interpreter-shaded.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java/zeppelin-java.iml" filepath="$PROJECT_DIR$/java/zeppelin-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jdbc/zeppelin-jdbc.iml" filepath="$PROJECT_DIR$/jdbc/zeppelin-jdbc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-jupyter/zeppelin-jupyter.iml" filepath="$PROJECT_DIR$/zeppelin-jupyter/zeppelin-jupyter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-jupyter-interpreter/zeppelin-jupyter-interpreter.iml" filepath="$PROJECT_DIR$/zeppelin-jupyter-interpreter/zeppelin-jupyter-interpreter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-jupyter-interpreter-shaded/zeppelin-jupyter-interpreter-shaded.iml" filepath="$PROJECT_DIR$/zeppelin-jupyter-interpreter-shaded/zeppelin-jupyter-interpreter-shaded.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlin/zeppelin-kotlin.iml" filepath="$PROJECT_DIR$/kotlin/zeppelin-kotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ksql/zeppelin-ksql.iml" filepath="$PROJECT_DIR$/ksql/zeppelin-ksql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kylin/zeppelin-kylin.iml" filepath="$PROJECT_DIR$/kylin/zeppelin-kylin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lens/zeppelin-lens.iml" filepath="$PROJECT_DIR$/lens/zeppelin-lens.iml" />
+      <module fileurl="file://$PROJECT_DIR$/livy/zeppelin-livy.iml" filepath="$PROJECT_DIR$/livy/zeppelin-livy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/markdown/zeppelin-markdown.iml" filepath="$PROJECT_DIR$/markdown/zeppelin-markdown.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mongodb/zeppelin-mongodb.iml" filepath="$PROJECT_DIR$/mongodb/zeppelin-mongodb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/neo4j/zeppelin-neo4j.iml" filepath="$PROJECT_DIR$/neo4j/zeppelin-neo4j.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pig/zeppelin-pig.iml" filepath="$PROJECT_DIR$/pig/zeppelin-pig.iml" />
+      <module fileurl="file://$PROJECT_DIR$/python/zeppelin-python.iml" filepath="$PROJECT_DIR$/python/zeppelin-python.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scalding/zeppelin-scalding_2.10.iml" filepath="$PROJECT_DIR$/scalding/zeppelin-scalding_2.10.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scio/zeppelin-scio.iml" filepath="$PROJECT_DIR$/scio/zeppelin-scio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-server/zeppelin-server.iml" filepath="$PROJECT_DIR$/zeppelin-server/zeppelin-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shell/zeppelin-shell.iml" filepath="$PROJECT_DIR$/shell/zeppelin-shell.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark/spark-dependencies/zeppelin-spark-dependencies.iml" filepath="$PROJECT_DIR$/spark/spark-dependencies/zeppelin-spark-dependencies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-submit/zeppelin-spark-submit.iml" filepath="$PROJECT_DIR$/spark-submit/zeppelin-spark-submit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sparql/zeppelin-sparql.iml" filepath="$PROJECT_DIR$/sparql/zeppelin-sparql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/submarine/zeppelin-submarine.iml" filepath="$PROJECT_DIR$/submarine/zeppelin-submarine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-web/zeppelin-web.iml" filepath="$PROJECT_DIR$/zeppelin-web/zeppelin-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zeppelin-zengine/zeppelin-zengine.iml" filepath="$PROJECT_DIR$/zeppelin-zengine/zeppelin-zengine.iml" />
+    </modules>
+  </component>
+</project>

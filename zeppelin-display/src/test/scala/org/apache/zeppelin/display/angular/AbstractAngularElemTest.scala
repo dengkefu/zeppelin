@@ -37,7 +37,7 @@ trait AbstractAngularElemTest
     val context = InterpreterContext.builder
       .setNoteId("noteId")
       .setAngularObjectRegistry(new AngularObjectRegistry(intpGroup.getId(), null))
-      .setInterpreterOut(new InterpreterOutput())
+      .setInterpreterOut(new InterpreterOutput(null))
       .build()
 
     InterpreterContext.set(context)

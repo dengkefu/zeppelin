@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,7 +45,7 @@ public class InterpreterOutput extends OutputStream {
 
   ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-  private final List<InterpreterOutputListener> outputListeners = new ArrayList<>();
+  private final InterpreterOutputListener flushListener;
   private final InterpreterOutputChangeListener changeListener;
 
   private int size = 0;
@@ -59,21 +58,17 @@ public class InterpreterOutput extends OutputStream {
   // change static var to set interpreter output limit
   // limit will be applied to all InterpreterOutput object.
   // so we can expect the consistent behavior
-  public static int LIMIT = Constants.ZEPPELIN_INTERPRETER_OUTPUT_LIMIT;
-
-  public InterpreterOutput() {
-    changeListener = null;
-  }
+  public static int limit = Constants.ZEPPELIN_INTERPRETER_OUTPUT_LIMIT;
 
   public InterpreterOutput(InterpreterOutputListener flushListener) {
-    this.outputListeners.add(flushListener);
+    this.flushListener = flushListener;
     changeListener = null;
   }
 
   public InterpreterOutput(InterpreterOutputListener flushListener,
                            InterpreterOutputChangeListener listener)
       throws IOException {
-    this.outputListeners.add(flushListener);
+    this.flushListener = flushListener;
     this.changeListener = listener;
   }
 
@@ -113,10 +108,6 @@ public class InterpreterOutput extends OutputStream {
     }
   }
 
-  public void addInterpreterOutListener(InterpreterOutputListener outputListener) {
-    this.outputListeners.add(outputListener);
-  }
-
   public InterpreterResultMessageOutputListener createInterpreterResultMessageOutputListener(
       final int index) {
 
@@ -125,15 +116,15 @@ public class InterpreterOutput extends OutputStream {
 
       @Override
       public void onAppend(InterpreterResultMessageOutput out, byte[] line) {
-        for (InterpreterOutputListener outputListener : outputListeners) {
-          outputListener.onAppend(idx, out, line);
+        if (flushListener != null) {
+          flushListener.onAppend(idx, out, line);
         }
       }
 
       @Override
       public void onUpdate(InterpreterResultMessageOutput out) {
-        for (InterpreterOutputListener outputListener : outputListeners) {
-          outputListener.onUpdate(idx, out);
+        if (flushListener != null) {
+          flushListener.onUpdate(idx, out);
         }
       }
     };
@@ -193,8 +184,8 @@ public class InterpreterOutput extends OutputStream {
   }
 
   private void updateAllResultMessages() {
-    for (InterpreterOutputListener outputListener : outputListeners) {
-      outputListener.onUpdateAll(this);
+    if (flushListener != null) {
+      flushListener.onUpdateAll(this);
     }
   }
 
@@ -215,12 +206,12 @@ public class InterpreterOutput extends OutputStream {
     synchronized (resultMessageOutputs) {
       currentOut = getCurrentOutput();
 
-      if (++size > LIMIT) {
+      if (++size > limit) {
         if (b == NEW_LINE_CHAR && currentOut != null) {
           InterpreterResult.Type type = currentOut.getType();
           if (type == InterpreterResult.Type.TEXT || type == InterpreterResult.Type.TABLE) {
             setType(InterpreterResult.Type.HTML);
-            getCurrentOutput().write(ResultMessages.getExceedsLimitSizeMessage(LIMIT,
+            getCurrentOutput().write(ResultMessages.getExceedsLimitSizeMessage(limit,
                 "ZEPPELIN_INTERPRETER_OUTPUT_LIMIT").getData().getBytes());
             truncated = true;
             return;

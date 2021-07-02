@@ -17,10 +17,11 @@
 package org.apache.zeppelin.conf;
 
 
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.zeppelin.conf.ZeppelinConfiguration.ConfVars;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -31,20 +32,15 @@ import java.util.List;
 
 
 public class ZeppelinConfigurationTest {
-  @BeforeClass
-  public static void clearSystemVariables() {
-    ZeppelinConfiguration.reset();
-  }
-
-  @After
-  public void cleanup() {
-    ZeppelinConfiguration.reset();
+  @Before
+  public void clearSystemVariables() {
+    System.clearProperty(ConfVars.ZEPPELIN_NOTEBOOK_DIR.getVarName());
   }
 
   @Test
-  public void getAllowedOrigins2Test() throws MalformedURLException {
+  public void getAllowedOrigins2Test() throws MalformedURLException, ConfigurationException {
 
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("test-zeppelin-site2.xml");
+    ZeppelinConfiguration conf = new ZeppelinConfiguration(this.getClass().getResource("/test-zeppelin-site2.xml"));
     List<String> origins = conf.getAllowedOrigins();
     Assert.assertEquals(2, origins.size());
     Assert.assertEquals("http://onehost:8080", origins.get(0));
@@ -52,108 +48,94 @@ public class ZeppelinConfigurationTest {
   }
 
   @Test
-  public void getAllowedOrigins1Test() throws MalformedURLException {
+  public void getAllowedOrigins1Test() throws MalformedURLException, ConfigurationException {
 
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("test-zeppelin-site1.xml");
+    ZeppelinConfiguration conf = new ZeppelinConfiguration(this.getClass().getResource("/test-zeppelin-site1.xml"));
     List<String> origins = conf.getAllowedOrigins();
     Assert.assertEquals(1, origins.size());
     Assert.assertEquals("http://onehost:8080", origins.get(0));
   }
 
   @Test
-  public void getAllowedOriginsNoneTest() throws MalformedURLException {
+  public void getAllowedOriginsNoneTest() throws MalformedURLException, ConfigurationException {
 
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("zeppelin-test-site.xml");
+    ZeppelinConfiguration conf = new ZeppelinConfiguration(this.getClass().getResource("/zeppelin-test-site.xml"));
     List<String> origins = conf.getAllowedOrigins();
     Assert.assertEquals(1, origins.size());
   }
 
   @Test
-  public void isWindowsPathTestTrue() {
+  public void isWindowsPathTestTrue() throws ConfigurationException {
 
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("zeppelin-test-site.xml");
+    ZeppelinConfiguration conf = new ZeppelinConfiguration(this.getClass().getResource("/zeppelin-test-site.xml"));
     Boolean isIt = conf.isWindowsPath("c:\\test\\file.txt");
     Assert.assertTrue(isIt);
   }
 
   @Test
-  public void isWindowsPathTestFalse() {
+  public void isWindowsPathTestFalse() throws ConfigurationException {
 
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("zeppelin-test-site.xml");
+    ZeppelinConfiguration conf = new ZeppelinConfiguration(this.getClass().getResource("/zeppelin-test-site.xml"));
     Boolean isIt = conf.isWindowsPath("~/test/file.xml");
     Assert.assertFalse(isIt);
   }
 
   @Test
-  public void isPathWithSchemeTestTrue() {
+  public void isPathWithSchemeTestTrue() throws ConfigurationException {
 
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("zeppelin-test-site.xml");
+    ZeppelinConfiguration conf = new ZeppelinConfiguration(this.getClass().getResource("/zeppelin-test-site.xml"));
     Boolean isIt = conf.isPathWithScheme("hdfs://hadoop.example.com/zeppelin/notebook");
     Assert.assertTrue(isIt);
   }
 
   @Test
-  public void isPathWithSchemeTestFalse() {
+  public void isPathWithSchemeTestFalse() throws ConfigurationException {
 
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("zeppelin-test-site.xml");
+    ZeppelinConfiguration conf = new ZeppelinConfiguration(this.getClass().getResource("/zeppelin-test-site.xml"));
     Boolean isIt = conf.isPathWithScheme("~/test/file.xml");
     Assert.assertFalse(isIt);
   }
 
   @Test
-  public void isPathWithInvalidSchemeTest() {
+  public void isPathWithInvalidSchemeTest() throws ConfigurationException {
 
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("zeppelin-test-site.xml");
+    ZeppelinConfiguration conf = new ZeppelinConfiguration(this.getClass().getResource("/zeppelin-test-site.xml"));
     Boolean isIt = conf.isPathWithScheme("c:\\test\\file.txt");
     Assert.assertFalse(isIt);
   }
 
   @Test
-  public void getNotebookDirTest() {
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("zeppelin-test-site.xml");
+  public void getNotebookDirTest() throws ConfigurationException {
+    ZeppelinConfiguration conf = new ZeppelinConfiguration(this.getClass().getResource("/zeppelin-test-site.xml"));
     String notebookLocation = conf.getNotebookDir();
     assertTrue(notebookLocation.endsWith("notebook"));
   }
 
   @Test
-  public void isNotebookPublicTest() {
+  public void isNotebookPublicTest() throws ConfigurationException {
 
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("zeppelin-test-site.xml");
+    ZeppelinConfiguration conf = new ZeppelinConfiguration(this.getClass().getResource("/zeppelin-test-site.xml"));
     boolean isIt = conf.isNotebookPublic();
     assertTrue(isIt);
   }
 
   @Test
-  public void getPathTest() {
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("zeppelin-test-site.xml");
-    conf.setProperty(ConfVars.ZEPPELIN_HOME.getVarName(), "/usr/lib/zeppelin");
+  public void getPathTest() throws ConfigurationException {
+    System.setProperty(ConfVars.ZEPPELIN_HOME.getVarName(), "/usr/lib/zeppelin");
+    ZeppelinConfiguration conf = new ZeppelinConfiguration(this.getClass().getResource("/zeppelin-test-site.xml"));
     Assert.assertEquals("/usr/lib/zeppelin", conf.getZeppelinHome());
     Assert.assertEquals("/usr/lib/zeppelin/conf", conf.getConfDir());
   }
 
   @Test
-  public void getConfigFSPath() {
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("zeppelin-test-site.xml");
-    conf.setProperty(ConfVars.ZEPPELIN_HOME.getVarName(), "/usr/lib/zeppelin");
-    conf.setProperty(ConfVars.ZEPPELIN_CONFIG_FS_DIR.getVarName(), "conf");
+  public void getConfigFSPath() throws ConfigurationException {
+    System.setProperty(ConfVars.ZEPPELIN_HOME.getVarName(), "/usr/lib/zeppelin");
+    System.setProperty(ConfVars.ZEPPELIN_CONFIG_FS_DIR.getVarName(), "conf");
+    ZeppelinConfiguration conf = new ZeppelinConfiguration(this.getClass().getResource("/zeppelin-test-site.xml"));
     assertEquals("/usr/lib/zeppelin/conf", conf.getConfigFSDir(true));
 
-    conf.setProperty(ConfVars.ZEPPELIN_CONFIG_STORAGE_CLASS.getVarName(),
-        "org.apache.zeppelin.storage.FileSystemConfigStorage");
+    System.setProperty(ConfVars.ZEPPELIN_CONFIG_STORAGE_CLASS.getVarName(), "org.apache.zeppelin.storage.FileSystemConfigStorage");
     assertEquals("conf", conf.getConfigFSDir(false));
   }
 
-  @Test
-  public void checkParseException() {
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create("zeppelin-test-site.xml");
-    // when
-    conf.setProperty(ConfVars.ZEPPELIN_PORT.getVarName(), "luke skywalker");
-    // then
-    assertEquals(8080, conf.getServerPort());
-
-    // when
-    conf.setProperty(ConfVars.ZEPPELIN_PORT.getVarName(), "12345");
-    // then
-    assertEquals(12345, conf.getServerPort());
-  }
 }

@@ -196,7 +196,7 @@ public class JDBCInterpreterInterpolationTest extends BasicJDBCTestCaseAdapter {
             .setParagraphId("paragraph_1")
             .setAuthenticationInfo(new AuthenticationInfo("testUser"))
             .setResourcePool(resourcePool)
-            .setInterpreterOut(new InterpreterOutput())
+            .setInterpreterOut(new InterpreterOutput(null))
             .build();
   }
 }

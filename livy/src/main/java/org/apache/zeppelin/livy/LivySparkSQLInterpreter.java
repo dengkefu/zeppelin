@@ -72,7 +72,7 @@ public class LivySparkSQLInterpreter extends BaseLivyInterpreter {
     // to judge whether it is using spark2.
     try {
       InterpreterContext context = InterpreterContext.builder()
-          .setInterpreterOut(new InterpreterOutput())
+          .setInterpreterOut(new InterpreterOutput(null))
           .build();
       InterpreterResult result = sparkInterpreter.interpret("spark", context);
       if (result.code() == InterpreterResult.Code.SUCCESS &&
@@ -229,7 +229,7 @@ public class LivySparkSQLInterpreter extends BaseLivyInterpreter {
       if (sparkInterpreter != null) {
         return sparkInterpreter.getScheduler();
       } else {
-        return super.getScheduler();
+        return null;
       }
     }
   }

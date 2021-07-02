@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.hive.hcatalog:hive-hcatalog-core:test-jar:tests:2.3.4">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/hive/hcatalog/hive-hcatalog-core/2.3.4/hive-hcatalog-core-2.3.4-tests.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/hive/hcatalog/hive-hcatalog-core/2.3.4/hive-hcatalog-core-2.3.4-test-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/hive/hcatalog/hive-hcatalog-core/2.3.4/hive-hcatalog-core-2.3.4-test-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

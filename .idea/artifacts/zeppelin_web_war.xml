@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="zeppelin-web:war">
+    <output-path>$PROJECT_DIR$/zeppelin-web/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>zeppelin-web</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="zeppelin-web-0.9.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="zeppelin-web:war exploded" />
+    </root>
+  </artifact>
+</component>

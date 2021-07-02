@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="zeppelin-elasticsearch" />
+        <module name="zeppelin-scalding_2.10" />
+        <module name="notebookrepo-oss" />
+        <module name="zeppelin-scio" />
+        <module name="zeppelin-pig" />
+        <module name="zeppelin-spark-submit" />
+        <module name="zeppelin-ignite" />
+        <module name="zeppelin-zengine" />
+        <module name="zeppelin-client-examples" />
+        <module name="spark2-shims" />
+        <module name="launcher-k8s-standard" />
+        <module name="flink1.11-shims" />
+        <module name="zeppelin-file" />
+        <module name="zeppelin-kotlin" />
+        <module name="zeppelin-lens" />
+        <module name="zeppelin-livy" />
+        <module name="zeppelin-jdbc" />
+        <module name="zeppelin-alluxio" />
+        <module name="zeppelin-ksql" />
+        <module name="notebookrepo-gcs" />
+        <module name="zeppelin-hbase" />
+        <module name="launcher-flink" />
+        <module name="launcher-docker" />
+        <module name="notebookrepo-mongo" />
+        <module name="zeppelin-neo4j" />
+        <module name="zeppelin-submarine" />
+        <module name="zeppelin-display" />
+        <module name="zeppelin-influxdb" />
+        <module name="spark3-shims" />
+        <module name="notebookrepo-github" />
+        <module name="notebookrepo-azure" />
+        <module name="launcher-cluster" />
+        <module name="flink1.10-shims" />
+        <module name="zeppelin-java" />
+        <module name="notebookrepo-filesystem" />
+        <module name="zeppelin-kylin" />
+        <module name="zeppelin-bigquery" />
+        <module name="zeppelin-shell" />
+        <module name="zeppelin-markdown" />
+        <module name="zeppelin-web" />
+        <module name="notebookrepo-zeppelin-hub" />
+        <module name="zeppelin-beam" />
+        <module name="flink1.12-shims" />
+        <module name="zeppelin-interpreter" />
+        <module name="zeppelin-jupyter" />
+        <module name="zeppelin-sparql" />
+        <module name="zeppelin-geode" />
+        <module name="zeppelin-jupyter-interpreter" />
+        <module name="zeppelin-mongodb" />
+        <module name="zeppelin-client" />
+        <module name="zeppelin-spark-dependencies" />
+        <module name="flink-shims" />
+        <module name="zeppelin-interpreter-shaded" />
+        <module name="zeppelin-cassandra" />
+        <module name="zeppelin-common" />
+        <module name="spark-interpreter" />
+        <module name="zeppelin-hazelcastjet" />
+        <module name="sap" />
+        <module name="spark1-shims" />
+        <module name="zeppelin-python" />
+        <module name="zeppelin-flink" />
+        <module name="zeppelin-jupyter-interpreter-shaded" />
+        <module name="notebookrepo-s3" />
+        <module name="r" />
+        <module name="spark-shims" />
+        <module name="zeppelin-server" />
+        <module name="zeppelin-flink-cmd" />
+        <module name="launcher-yarn" />
+        <module name="zeppelin-angular" />
+        <module name="zeppelin-groovy" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="flink-parent" target="1.8" />
+      <module name="flink-shims" target="1.8" />
+      <module name="flink1.10-shims" target="1.8" />
+      <module name="flink1.11-shims" target="1.8" />
+      <module name="flink1.12-shims" target="1.8" />
+      <module name="launcher-cluster" target="1.8" />
+      <module name="launcher-docker" target="1.8" />
+      <module name="launcher-flink" target="1.8" />
+      <module name="launcher-k8s-standard" target="1.8" />
+      <module name="launcher-yarn" target="1.8" />
+      <module name="notebookrepo-azure" target="1.8" />
+      <module name="notebookrepo-filesystem" target="1.8" />
+      <module name="notebookrepo-gcs" target="1.8" />
+      <module name="notebookrepo-github" target="1.8" />
+      <module name="notebookrepo-mongo" target="1.8" />
+      <module name="notebookrepo-oss" target="1.8" />
+      <module name="notebookrepo-s3" target="1.8" />
+      <module name="notebookrepo-zeppelin-hub" target="1.8" />
+      <module name="r" target="1.8" />
+      <module name="sap" target="1.8" />
+      <module name="spark-interpreter" target="1.8" />
+      <module name="spark-parent" target="1.8" />
+      <module name="spark-scala-2.10" target="1.8" />
+      <module name="spark-scala-2.11" target="1.8" />
+      <module name="spark-scala-2.12" target="1.8" />
+      <module name="spark-scala-parent" target="1.8" />
+      <module name="spark-shims" target="1.8" />
+      <module name="spark1-shims" target="1.8" />
+      <module name="spark2-shims" target="1.8" />
+      <module name="spark3-shims" target="1.8" />
+      <module name="zengine-plugins-parent" target="1.8" />
+      <module name="zeppelin" target="1.8" />
+      <module name="zeppelin-alluxio" target="1.8" />
+      <module name="zeppelin-angular" target="1.8" />
+      <module name="zeppelin-beam" target="1.8" />
+      <module name="zeppelin-bigquery" target="1.8" />
+      <module name="zeppelin-cassandra" target="1.8" />
+      <module name="zeppelin-client" target="1.8" />
+      <module name="zeppelin-client-examples" target="1.8" />
+      <module name="zeppelin-common" target="1.8" />
+      <module name="zeppelin-display" target="1.8" />
+      <module name="zeppelin-distribution" target="1.8" />
+      <module name="zeppelin-elasticsearch" target="1.8" />
+      <module name="zeppelin-file" target="1.8" />
+      <module name="zeppelin-flink" target="1.8" />
+      <module name="zeppelin-flink-cmd" target="1.8" />
+      <module name="zeppelin-geode" target="1.8" />
+      <module name="zeppelin-groovy" target="1.8" />
+      <module name="zeppelin-hazelcastjet" target="1.8" />
+      <module name="zeppelin-hbase" target="1.8" />
+      <module name="zeppelin-ignite" target="1.8" />
+      <module name="zeppelin-influxdb" target="1.8" />
+      <module name="zeppelin-interpreter" target="1.8" />
+      <module name="zeppelin-interpreter-parent" target="1.8" />
+      <module name="zeppelin-interpreter-shaded" target="1.8" />
+      <module name="zeppelin-java" target="1.8" />
+      <module name="zeppelin-jdbc" target="1.8" />
+      <module name="zeppelin-jupyter" target="1.8" />
+      <module name="zeppelin-jupyter-interpreter" target="1.8" />
+      <module name="zeppelin-jupyter-interpreter-shaded" target="1.8" />
+      <module name="zeppelin-kotlin" target="1.8" />
+      <module name="zeppelin-ksql" target="1.8" />
+      <module name="zeppelin-kylin" target="1.8" />
+      <module name="zeppelin-lens" target="1.8" />
+      <module name="zeppelin-livy" target="1.8" />
+      <module name="zeppelin-markdown" target="1.8" />
+      <module name="zeppelin-mongodb" target="1.8" />
+      <module name="zeppelin-neo4j" target="1.8" />
+      <module name="zeppelin-pig" target="1.8" />
+      <module name="zeppelin-python" target="1.8" />
+      <module name="zeppelin-scalding_2.10" target="1.8" />
+      <module name="zeppelin-scio" target="1.8" />
+      <module name="zeppelin-server" target="1.8" />
+      <module name="zeppelin-server2" target="1.8" />
+      <module name="zeppelin-shell" target="1.8" />
+      <module name="zeppelin-spark-dependencies" target="1.8" />
+      <module name="zeppelin-spark-submit" target="1.8" />
+      <module name="zeppelin-sparql" target="1.8" />
+      <module name="zeppelin-submarine" target="1.8" />
+      <module name="zeppelin-web" target="1.8" />
+      <module name="zeppelin-zengine" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="zeppelin-server2" options="-parameters" />
+    </option>
+  </component>
+</project>

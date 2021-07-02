@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.hadoop:hadoop-yarn-server-tests:tests:2.6.5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/hadoop/hadoop-yarn-server-tests/2.6.5/hadoop-yarn-server-tests-2.6.5-tests.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/hadoop/hadoop-yarn-server-tests/2.6.5/hadoop-yarn-server-tests-2.6.5-test-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/hadoop/hadoop-yarn-server-tests/2.6.5/hadoop-yarn-server-tests-2.6.5-test-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

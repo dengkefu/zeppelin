@@ -67,8 +67,6 @@ public class CredentialRestApi {
    * @return JSON with status.OK
    */
   @PUT
-  @UserLogger
-  @LoggerDetail(detail = "新增用户凭证", params = "", level = 6, operationType = OperationType.INSERT, obj = "CREDENTIALS")
   public Response putCredentials(String message) {
     Map<String, String> messageMap =
         gson.fromJson(message, new TypeToken<Map<String, String>>() {}.getType());
@@ -102,6 +100,8 @@ public class CredentialRestApi {
    * @return JSON with status.OK
    */
   @GET
+  @UserLogger
+  @LoggerDetail(detail = "access to the pages", params = "", level = 1, operationType = OperationType.SELECT, obj = "SYSTEM")
   public Response getCredentials() {
     String user = authenticationService.getPrincipal();
     LOGGER.info("getCredentials for user {} ", user);
@@ -121,8 +121,6 @@ public class CredentialRestApi {
    * @return JSON with status.OK
    */
   @DELETE
-  @UserLogger
-  @LoggerDetail(detail = "删除用户凭证", params = "", level = 6, operationType = OperationType.DELETE, obj = "CREDENTIALS")
   public Response removeCredentials() {
     String user = authenticationService.getPrincipal();
     LOGGER.info("removeCredentials for user {} ", user);
@@ -147,8 +145,6 @@ public class CredentialRestApi {
    */
   @DELETE
   @Path("{entity}")
-  @UserLogger
-  @LoggerDetail(detail = "删除用户凭证仓库", params = "", level = 6, operationType = OperationType.SELECT, obj = "CREDENTIALS")
   public Response removeCredentialEntity(@PathParam("entity") String entity) {
     String user = authenticationService.getPrincipal();
     LOGGER.info("removeCredentialEntity for user {} entity {}", user, entity);

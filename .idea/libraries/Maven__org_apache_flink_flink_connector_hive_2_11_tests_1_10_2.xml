@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.flink:flink-connector-hive_2.11:tests:1.10.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/flink/flink-connector-hive_2.11/1.10.2/flink-connector-hive_2.11-1.10.2-tests.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/flink/flink-connector-hive_2.11/1.10.2/flink-connector-hive_2.11-1.10.2-test-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/flink/flink-connector-hive_2.11/1.10.2/flink-connector-hive_2.11-1.10.2-test-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

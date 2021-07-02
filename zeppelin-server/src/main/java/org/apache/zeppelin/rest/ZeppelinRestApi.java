@@ -31,10 +31,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
-import org.apache.zeppelin.actionLog.LoggerDetail;
-import org.apache.zeppelin.actionLog.UserLogger;
 import org.apache.zeppelin.annotation.ZeppelinApi;
-import org.apache.zeppelin.entity.log.OperationType;
 import org.apache.zeppelin.server.JsonResponse;
 import org.apache.zeppelin.util.Util;
 
@@ -78,8 +75,6 @@ public class ZeppelinRestApi {
    */
   @PUT
   @Path("log/level/{logLevel}")
-  @UserLogger
-  @LoggerDetail(detail = "修改日志记录级别", params = "", level = 6, operationType = OperationType.UPDATE, obj = "SYSTEM")
   public Response changeRootLogLevel(@Context HttpServletRequest request,
       @PathParam("logLevel") String logLevel) {
     Level level = Level.toLevel(logLevel);

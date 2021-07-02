@@ -780,7 +780,6 @@ public class NotebookServer extends WebSocketServlet
 
   public void broadcastReloadedNoteList(NotebookSocket conn, ServiceContext context)
       throws IOException {
-    getNotebook().reloadAllNotes(context.getAutheInfo());
     broadcastNoteListUpdate();
   }
 
@@ -789,8 +788,8 @@ public class NotebookServer extends WebSocketServlet
     LOG.info("Cannot {}. Connection readers {}. Allowed readers {}", op, userAndRoles, allowed);
 
     conn.send(serializeMessage(new Message(OP.AUTH_INFO).put("info",
-        "访问权限不足 " + op + ".\n\n" + "允许访问的用户或角色为: " + allowed
-            .toString() + "\n\n" + "当前用户 " + userName + " 属于: " + userAndRoles
+        "Insufficient privileges to " + op + " note.\n\n" + "Allowed users or roles: " + allowed
+            .toString() + "\n\n" + "But the user " + userName + " belongs to: " + userAndRoles
             .toString())));
   }
 
@@ -1685,7 +1684,7 @@ public class NotebookServer extends WebSocketServlet
     try {
       Note note = getNotebook().getNote(noteId);
       if (note == null) {
-        LOG.warn("Note {} not found", noteId);
+        LOG.warn("Note " + noteId + " note found");
         return;
       }
       Paragraph paragraph = note.getParagraph(paragraphId);
@@ -2162,8 +2161,8 @@ public class NotebookServer extends WebSocketServlet
     boolean isAllowed = notebookAuthorization.isReader(noteId, userAndRoles);
     Set<String> allowed = notebookAuthorization.getReaders(noteId);
     if (false == isAllowed) {
-      String errorMsg = "没有权限阅读此视图. " +
-          "允许的用户或角色为: " + allowed;
+      String errorMsg = "Insufficient privileges to READER note. " +
+          "Allowed users or roles: " + allowed;
       throw new ServiceException(errorMsg);
     }
 

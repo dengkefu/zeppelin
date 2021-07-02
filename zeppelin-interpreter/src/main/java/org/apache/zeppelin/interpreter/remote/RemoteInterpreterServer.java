@@ -107,7 +107,7 @@ public class RemoteInterpreterServer extends Thread
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RemoteInterpreterServer.class);
 
-  public static final int DEFAULT_SHUTDOWN_TIMEOUT = 2000;
+  private static final int DEFAULT_SHUTDOWN_TIMEOUT = 2000;
 
   private String interpreterGroupId;
   private InterpreterGroup interpreterGroup;
@@ -359,7 +359,7 @@ public class RemoteInterpreterServer extends Thread
 
         String localRepoPath = properties.get("zeppelin.interpreter.localRepo");
         if (properties.containsKey("zeppelin.interpreter.output.limit")) {
-          InterpreterOutput.LIMIT = Integer.parseInt(
+          InterpreterOutput.limit = Integer.parseInt(
                   properties.get("zeppelin.interpreter.output.limit"));
         }
 

@@ -325,14 +325,6 @@ public class Notebook {
     for (Paragraph p : paragraphs) {
       newNote.addCloneParagraph(p, subject);
     }
-
-    newNote.setConfig(new HashMap<>(sourceNote.getConfig()));
-    newNote.setInfo(new HashMap<>(sourceNote.getInfo()));
-    newNote.setDefaultInterpreterGroup(sourceNote.getDefaultInterpreterGroup());
-    newNote.setNoteForms(new HashMap<>(sourceNote.getNoteForms()));
-    newNote.setNoteParams(new HashMap<>(sourceNote.getNoteParams()));
-    newNote.setRunning(false);
-
     saveNote(newNote, subject);
     authorizationService.cloneNoteMeta(newNote.getId(), sourceNoteId, subject);
     return newNote;
@@ -340,8 +332,6 @@ public class Notebook {
 
   public void removeNote(Note note, AuthenticationInfo subject) throws IOException {
     LOGGER.info("Remove note: {}", note.getId());
-    // Set Remove to true to cancel saving this note
-    note.setRemoved(true);
     noteManager.removeNote(note.getId(), subject);
     fireNoteRemoveEvent(note, subject);
   }

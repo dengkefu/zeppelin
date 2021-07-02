@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.lens:lens-cli:2.5.0-beta">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/lens/lens-cli/2.5.0-beta/lens-cli-2.5.0-beta.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/lens/lens-cli/2.5.0-beta/lens-cli-2.5.0-beta-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/lens/lens-cli/2.5.0-beta/lens-cli-2.5.0-beta-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

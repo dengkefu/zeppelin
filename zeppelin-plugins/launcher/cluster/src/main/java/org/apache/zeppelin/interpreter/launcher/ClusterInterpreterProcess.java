@@ -3,10 +3,10 @@ package org.apache.zeppelin.interpreter.launcher;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.zeppelin.interpreter.remote.ExecRemoteInterpreterProcess;
+import org.apache.zeppelin.interpreter.remote.RemoteInterpreterManagedProcess;
 import org.apache.zeppelin.interpreter.remote.RemoteInterpreterUtils;
 
-public class ClusterInterpreterProcess extends ExecRemoteInterpreterProcess {
+public class ClusterInterpreterProcess extends RemoteInterpreterManagedProcess {
 
   public ClusterInterpreterProcess(
       String intpRunner,
@@ -22,7 +22,8 @@ public class ClusterInterpreterProcess extends ExecRemoteInterpreterProcess {
       String interpreterGroupId,
       boolean isUserImpersonated) {
 
-    super(intpEventServerPort,
+    super(intpRunner,
+      intpEventServerPort,
       intpEventServerHost,
       interpreterPortRange,
       intpDir,
@@ -32,8 +33,7 @@ public class ClusterInterpreterProcess extends ExecRemoteInterpreterProcess {
       connectionPoolSize,
       interpreterSettingName,
       interpreterGroupId,
-      isUserImpersonated,
-      intpRunner);
+      isUserImpersonated);
   }
 
   @Override

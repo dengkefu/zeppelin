@@ -48,7 +48,7 @@ public abstract class KerberosInterpreter extends AbstractInterpreter {
 
   private Integer kinitFailCount = 0;
   private ScheduledExecutorService scheduledExecutorService;
-  private static final Logger LOGGER = LoggerFactory.getLogger(KerberosInterpreter.class);
+  private static Logger logger = LoggerFactory.getLogger(KerberosInterpreter.class);
 
   public KerberosInterpreter(Properties property) {
     super(property);
@@ -82,7 +82,7 @@ public abstract class KerberosInterpreter extends AbstractInterpreter {
     try {
       refreshInterval = getTimeAsMs(refreshIntervalString);
     } catch (IllegalArgumentException e) {
-      LOGGER.error("Cannot get time in MS for the given string, " + refreshIntervalString
+      logger.error("Cannot get time in MS for the given string, " + refreshIntervalString
           + " defaulting to 1d ", e);
       refreshInterval = getTimeAsMs("1d");
     }
@@ -97,7 +97,7 @@ public abstract class KerberosInterpreter extends AbstractInterpreter {
       try {
         kinitFailThreshold = new Integer(System.getenv("KINIT_FAIL_THRESHOLD"));
       } catch (Exception e) {
-        LOGGER.error("Cannot get integer value from the given string, " + System
+        logger.error("Cannot get integer value from the given string, " + System
             .getenv("KINIT_FAIL_THRESHOLD") + " defaulting to " + kinitFailThreshold, e);
       }
     }
@@ -106,7 +106,7 @@ public abstract class KerberosInterpreter extends AbstractInterpreter {
 
   private Long getTimeAsMs(String time) {
     if (time == null) {
-      LOGGER.error("Cannot convert null to a time value. Defaulting to 1d");
+      logger.error("Cannot convert to time value.", time);
       time = "1d";
     }
 
@@ -133,19 +133,17 @@ public abstract class KerberosInterpreter extends AbstractInterpreter {
       public Object call() throws Exception {
 
         if (runKerberosLogin()) {
-          LOGGER.info("Ran runKerberosLogin command successfully.");
+          logger.info("Ran runKerberosLogin command successfully.");
           kinitFailCount = 0;
           // schedule another kinit run with a fixed delay.
-          LOGGER.info("Scheduling Kerberos ticket refresh thread with interval {} ms",
-            getKerberosRefreshInterval());
           scheduledExecutorService
               .schedule(this, getKerberosRefreshInterval(), TimeUnit.MILLISECONDS);
         } else {
           kinitFailCount++;
-          LOGGER.info("runKerberosLogin failed for {} time(s).", kinitFailCount);
+          logger.info("runKerberosLogin failed for " + kinitFailCount + " time(s).");
           // schedule another retry at once or close the interpreter if too many times kinit fails
           if (kinitFailCount >= kinitFailThreshold()) {
-            LOGGER.error("runKerberosLogin failed for  max attempts, calling close interpreter.");
+            logger.error("runKerberosLogin failed for  max attempts, calling close interpreter.");
             close();
           } else {
             scheduledExecutorService.submit(this);

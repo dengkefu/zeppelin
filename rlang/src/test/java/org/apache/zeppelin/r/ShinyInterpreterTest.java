@@ -240,7 +240,7 @@ public class ShinyInterpreterTest {
     InterpreterContext context = InterpreterContext.builder()
             .setNoteId("note_1")
             .setParagraphId("paragraph_1")
-            .setInterpreterOut(new InterpreterOutput())
+            .setInterpreterOut(new InterpreterOutput(null))
             .setLocalProperties(new HashMap<>())
             .setInterpreterClassName(ShinyInterpreter.class.getName())
             .setIntpEventClient(mock(RemoteInterpreterEventClient.class))

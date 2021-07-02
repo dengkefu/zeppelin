@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,8 +42,8 @@ import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
-import org.apache.shiro.realm.ldap.DefaultLdapRealm;
 import org.apache.shiro.realm.ldap.JndiLdapContextFactory;
+import org.apache.shiro.realm.ldap.JndiLdapRealm;
 import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
@@ -60,13 +61,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ShiroAuthenticationService implements AuthenticationService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ShiroAuthenticationService.class);
-
-  private static final String INI_REALM = "org.apache.shiro.realm.text.IniRealm";
-  private static final String LDAP_REALM = "org.apache.zeppelin.realm.LdapRealm";
-  private static final String LDAP_GROUP_REALM = "org.apache.zeppelin.realm.LdapGroupRealm";
-  private static final String ACTIVE_DIRECTORY_GROUP_REALM = "org.apache.zeppelin.realm.ActiveDirectoryGroupRealm";
-  private static final String JDBC_REALM = "org.apache.shiro.realm.jdbc.JdbcRealm";
+  private final Logger LOGGER = LoggerFactory.getLogger(ShiroAuthenticationService.class);
 
   private final ZeppelinConfiguration conf;
 
@@ -80,7 +75,7 @@ public class ShiroAuthenticationService implements AuthenticationService {
             ((DefaultWebSecurityManager) org.apache.shiro.SecurityUtils.getSecurityManager())
                 .getRealms();
         if (realms.size() > 1) {
-          boolean isIniRealmEnabled = false;
+          Boolean isIniRealmEnabled = false;
           for (Realm realm : realms) {
             if (realm instanceof IniRealm && ((IniRealm) realm).getIni().get("users") != null) {
               isIniRealmEnabled = true;
@@ -112,9 +107,8 @@ public class ShiroAuthenticationService implements AuthenticationService {
     if (subject.isAuthenticated()) {
       principal = extractPrincipal(subject);
       if (conf.isUsernameForceLowerCase()) {
-        if (LOGGER.isDebugEnabled()) {
-          LOGGER.debug("Converting principal name {} to lower case: {}", principal, principal.toLowerCase());
-        }
+        LOGGER.debug("Converting principal name " + principal
+            + " to lower case:" + principal.toLowerCase());
         principal = principal.toLowerCase();
       }
     } else {
@@ -163,17 +157,17 @@ public class ShiroAuthenticationService implements AuthenticationService {
       if (realmsList != null) {
         for (Realm realm : realmsList) {
           String realClassName = realm.getClass().getName();
-          LOGGER.debug("RealmClass.getName: {}", realClassName);
-          if (INI_REALM.equals(realClassName)) {
+          LOGGER.debug("RealmClass.getName: " + realClassName);
+          if (realClassName.equals("org.apache.shiro.realm.text.IniRealm")) {
             usersList.addAll(getUserList((IniRealm) realm));
-          } else if (LDAP_GROUP_REALM.equals(realClassName)) {
-            usersList.addAll(getUserList((DefaultLdapRealm) realm, searchText, numUsersToFetch));
-          } else if (LDAP_REALM.equals(realClassName)) {
+          } else if (realClassName.equals("org.apache.zeppelin.realm.LdapGroupRealm")) {
+            usersList.addAll(getUserList((JndiLdapRealm) realm, searchText, numUsersToFetch));
+          } else if (realClassName.equals("org.apache.zeppelin.realm.LdapRealm")) {
             usersList.addAll(getUserList((LdapRealm) realm, searchText, numUsersToFetch));
-          } else if (ACTIVE_DIRECTORY_GROUP_REALM.equals(realClassName)) {
+          } else if (realClassName.equals("org.apache.zeppelin.realm.ActiveDirectoryGroupRealm")) {
             usersList.addAll(
                 getUserList((ActiveDirectoryGroupRealm) realm, searchText, numUsersToFetch));
-          } else if (JDBC_REALM.equals(realClassName)) {
+          } else if (realClassName.equals("org.apache.shiro.realm.jdbc.JdbcRealm")) {
             usersList.addAll(getUserList((JdbcRealm) realm));
           }
         }
@@ -197,10 +191,10 @@ public class ShiroAuthenticationService implements AuthenticationService {
       if (realmsList != null) {
         for (Realm realm : realmsList) {
           String name = realm.getClass().getName();
-          LOGGER.debug("RealmClass.getName: {}", name);
-          if (INI_REALM.equals(name)) {
+          LOGGER.debug("RealmClass.getName: " + name);
+          if (name.equals("org.apache.shiro.realm.text.IniRealm")) {
             rolesList.addAll(getRolesList((IniRealm) realm));
-          } else if (LDAP_REALM.equals(name)) {
+          } else if (name.equals("org.apache.zeppelin.realm.LdapRealm")) {
             rolesList.addAll(getRolesList((LdapRealm) realm));
           }
         }
@@ -221,16 +215,16 @@ public class ShiroAuthenticationService implements AuthenticationService {
   public Set<String> getAssociatedRoles() {
     Subject subject = org.apache.shiro.SecurityUtils.getSubject();
     HashSet<String> roles = new HashSet<>();
-    Map<String, String> allRoles = null;
+    Map allRoles = null;
 
     if (subject.isAuthenticated()) {
       Collection<Realm> realmsList = getRealmsList();
       for (Realm realm : realmsList) {
         String name = realm.getClass().getName();
-        if (INI_REALM.equals(name)) {
+        if (name.equals("org.apache.shiro.realm.text.IniRealm")) {
           allRoles = ((IniRealm) realm).getIni().get("roles");
           break;
-        } else if (LDAP_REALM.equals(name)) {
+        } else if (name.equals("org.apache.zeppelin.realm.LdapRealm")) {
           try {
             AuthorizationInfo auth =
                 ((LdapRealm) realm)
@@ -244,15 +238,17 @@ public class ShiroAuthenticationService implements AuthenticationService {
             LOGGER.error("Can't fetch roles", e);
           }
           break;
-        } else if (ACTIVE_DIRECTORY_GROUP_REALM.equals(name)) {
+        } else if (name.equals("org.apache.zeppelin.realm.ActiveDirectoryGroupRealm")) {
           allRoles = ((ActiveDirectoryGroupRealm) realm).getListRoles();
           break;
         }
       }
       if (allRoles != null) {
-        for (Map.Entry<String, String> pair : allRoles.entrySet()) {
-          if (subject.hasRole(pair.getKey())) {
-            roles.add(pair.getKey());
+        Iterator it = allRoles.entrySet().iterator();
+        while (it.hasNext()) {
+          Map.Entry pair = (Map.Entry) it.next();
+          if (subject.hasRole((String) pair.getKey())) {
+            roles.add((String) pair.getKey());
           }
         }
       }
@@ -263,10 +259,12 @@ public class ShiroAuthenticationService implements AuthenticationService {
   /** Function to extract users from shiro.ini. */
   private List<String> getUserList(IniRealm r) {
     List<String> userList = new ArrayList<>();
-    Map<String, String> getIniUser = r.getIni().get(IniRealm.USERS_SECTION_NAME);
+    Map getIniUser = r.getIni().get("users");
     if (getIniUser != null) {
-      for (Map.Entry<String, String> pair : getIniUser.entrySet()) {
-        userList.add(pair.getKey().trim());
+      Iterator it = getIniUser.entrySet().iterator();
+      while (it.hasNext()) {
+        Map.Entry pair = (Map.Entry) it.next();
+        userList.add(pair.getKey().toString().trim());
       }
     }
     return userList;
@@ -280,20 +278,22 @@ public class ShiroAuthenticationService implements AuthenticationService {
    */
   private List<String> getRolesList(IniRealm r) {
     List<String> roleList = new ArrayList<>();
-    Map<String, String> getIniRoles = r.getIni().get(IniRealm.ROLES_SECTION_NAME);
+    Map getIniRoles = r.getIni().get("roles");
     if (getIniRoles != null) {
-      for (Map.Entry<String, String> pair : getIniRoles.entrySet()) {
-        roleList.add(pair.getKey().trim());
+      Iterator it = getIniRoles.entrySet().iterator();
+      while (it.hasNext()) {
+        Map.Entry pair = (Map.Entry) it.next();
+        roleList.add(pair.getKey().toString().trim());
       }
     }
     return roleList;
   }
 
   /** Function to extract users from LDAP. */
-  private List<String> getUserList(DefaultLdapRealm r, String searchText, int numUsersToFetch) {
+  private List<String> getUserList(JndiLdapRealm r, String searchText, int numUsersToFetch) {
     List<String> userList = new ArrayList<>();
     String userDnTemplate = r.getUserDnTemplate();
-    String[] userDn = userDnTemplate.split(",", 2);
+    String userDn[] = userDnTemplate.split(",", 2);
     String userDnPrefix = userDn[0].split("=")[0];
     String userDnSuffix = userDn[1];
     JndiLdapContextFactory cf = (JndiLdapContextFactory) r.getContextFactory();
@@ -304,10 +304,10 @@ public class ShiroAuthenticationService implements AuthenticationService {
       constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);
       String[] attrIDs = {userDnPrefix};
       constraints.setReturningAttributes(attrIDs);
-      NamingEnumeration<SearchResult> result =
+      NamingEnumeration result =
           ctx.search(userDnSuffix, "(" + userDnPrefix + "=*" + searchText + "*)", constraints);
       while (result.hasMore()) {
-        Attributes attrs = result.next().getAttributes();
+        Attributes attrs = ((SearchResult) result.next()).getAttributes();
         if (attrs.get(userDnPrefix) != null) {
           String currentUser = attrs.get(userDnPrefix).toString();
           userList.add(currentUser.split(":")[1].trim());
@@ -316,14 +316,14 @@ public class ShiroAuthenticationService implements AuthenticationService {
     } catch (Exception e) {
       LOGGER.error("Error retrieving User list from Ldap Realm", e);
     }
-    LOGGER.info("UserList: {}", userList);
+    LOGGER.info("UserList: " + userList);
     return userList;
   }
 
   /** Function to extract users from Zeppelin LdapRealm. */
   private List<String> getUserList(LdapRealm r, String searchText, int numUsersToFetch) {
     List<String> userList = new ArrayList<>();
-    LOGGER.debug("SearchText: {}", searchText);
+    LOGGER.debug("SearchText: " + searchText);
     String userAttribute = r.getUserSearchAttributeName();
     String userSearchRealm = r.getUserSearchBase();
     String userObjectClass = r.getUserObjectClass();
@@ -335,7 +335,7 @@ public class ShiroAuthenticationService implements AuthenticationService {
       constraints.setCountLimit(numUsersToFetch);
       String[] attrIDs = {userAttribute};
       constraints.setReturningAttributes(attrIDs);
-      NamingEnumeration<SearchResult> result =
+      NamingEnumeration result =
           ctx.search(
               userSearchRealm,
               "(&(objectclass="
@@ -347,7 +347,7 @@ public class ShiroAuthenticationService implements AuthenticationService {
                   + "*))",
               constraints);
       while (result.hasMore()) {
-        Attributes attrs = result.next().getAttributes();
+        Attributes attrs = ((SearchResult) result.next()).getAttributes();
         if (attrs.get(userAttribute) != null) {
           String currentUser;
           if (r.getUserLowerCase()) {
@@ -357,7 +357,7 @@ public class ShiroAuthenticationService implements AuthenticationService {
             LOGGER.debug("userLowerCase false");
             currentUser = (String) attrs.get(userAttribute).get();
           }
-          LOGGER.debug("CurrentUser: {}", currentUser);
+          LOGGER.debug("CurrentUser: " + currentUser);
           userList.add(currentUser.trim());
         }
       }
@@ -377,9 +377,11 @@ public class ShiroAuthenticationService implements AuthenticationService {
     List<String> roleList = new ArrayList<>();
     Map<String, String> roles = r.getListRoles();
     if (roles != null) {
-      for (Map.Entry<String, String> pair : roles.entrySet()) {
-        LOGGER.debug("RoleKeyValue: {} = {}", pair.getKey(), pair.getValue());
-        roleList.add(pair.getKey());
+      Iterator it = roles.entrySet().iterator();
+      while (it.hasNext()) {
+        Map.Entry pair = (Map.Entry) it.next();
+        LOGGER.debug("RoleKeyValue: " + pair.getKey() + " = " + pair.getValue());
+        roleList.add((String) pair.getKey());
       }
     }
     return roleList;
@@ -405,7 +407,7 @@ public class ShiroAuthenticationService implements AuthenticationService {
     ResultSet rs = null;
     DataSource dataSource = null;
     String authQuery = "";
-    String[] retval;
+    String retval[];
     String tablename = "";
     String username = "";
     String userquery;

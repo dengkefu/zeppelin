@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.zeppelin:zeppelin-shell:0.10.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/zeppelin/zeppelin-shell/0.10.0-SNAPSHOT/zeppelin-shell-0.10.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/zeppelin/zeppelin-shell/0.10.0-SNAPSHOT/zeppelin-shell-0.10.0-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/Java/repository/org/apache/zeppelin/zeppelin-shell/0.10.0-SNAPSHOT/zeppelin-shell-0.10.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

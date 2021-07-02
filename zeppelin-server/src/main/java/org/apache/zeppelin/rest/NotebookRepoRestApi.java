@@ -78,6 +78,8 @@ public class NotebookRepoRestApi {
    */
   @GET
   @ZeppelinApi
+  @UserLogger
+  @LoggerDetail(detail = "access to the notebookRepo", params = "", level = 1, operationType = OperationType.SELECT, obj = "SYSTEM")
   public Response listRepoSettings() {
     AuthenticationInfo subject = new AuthenticationInfo(authenticationService.getPrincipal());
     LOG.info("Getting list of NoteRepo with Settings for user {}", subject.getUser());
@@ -118,8 +120,6 @@ public class NotebookRepoRestApi {
    */
   @PUT
   @ZeppelinApi
-  @UserLogger
-  @LoggerDetail(detail = "更新notebook仓库", params = "", level = 1, operationType = OperationType.SELECT, obj = "SYSTEM")
   public Response updateRepoSetting(String payload) {
     if (StringUtils.isBlank(payload)) {
       return new JsonResponse<>(Status.NOT_FOUND, "", Collections.emptyMap()).build();

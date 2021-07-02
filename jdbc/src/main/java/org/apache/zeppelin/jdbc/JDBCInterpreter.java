@@ -184,19 +184,15 @@ public class JDBCInterpreter extends KerberosInterpreter {
   protected boolean runKerberosLogin() {
     try {
       if (UserGroupInformation.isLoginKeytabBased()) {
-        LOGGER.debug("Trying relogin from keytab");
         UserGroupInformation.getLoginUser().reloginFromKeytab();
         return true;
       } else if (UserGroupInformation.isLoginTicketBased()) {
-        LOGGER.debug("Trying relogin from ticket cache");
         UserGroupInformation.getLoginUser().reloginFromTicketCache();
         return true;
       }
     } catch (Exception e) {
       LOGGER.error("Unable to run kinit for zeppelin", e);
     }
-    LOGGER.debug("Neither Keytab nor ticket based login. " +
-        "runKerberosLogin() returning false");
     return false;
   }
 
@@ -509,18 +505,15 @@ public class JDBCInterpreter extends KerberosInterpreter {
     String url = properties.getProperty(URL_KEY);
     String connectionUrl = appendProxyUserToURL(url, user, dbPrefix);
 
-    String authType = getProperty("zeppelin.jdbc.auth.type", "SIMPLE")
+    String authType = properties.getProperty("zeppelin.jdbc.auth.type", "SIMPLE")
             .trim().toUpperCase();
     switch (authType) {
       case "SIMPLE":
         connection = getConnectionFromPool(connectionUrl, user, dbPrefix, properties);
         break;
       case "KERBEROS":
-        LOGGER.debug("Calling createSecureConfiguration(); this will do " +
-            "loginUserFromKeytab() if required");
         JDBCSecurityImpl.createSecureConfiguration(getProperties(),
                 UserGroupInformation.AuthenticationMethod.KERBEROS);
-        LOGGER.debug("createSecureConfiguration() returned");
         boolean isProxyEnabled = Boolean.parseBoolean(
                 getProperty("zeppelin.jdbc.auth.kerberos.proxy.enable", "true"));
         if (basePropertiesMap.get(dbPrefix).containsKey("proxy.user.property")
@@ -724,11 +717,6 @@ public class JDBCInterpreter extends KerberosInterpreter {
       List<String>  sqlArray = sqlSplitter.splitSql(sql);
       for (String sqlToExecute : sqlArray) {
         LOGGER.info("Execute sql: " + sqlToExecute);
-        if (sqlToExecute.trim().toLowerCase().startsWith("set ")) {
-          // some version of hive doesn't work with set statement with empty line ahead.
-          // so we need to trim it first in this case.
-          sqlToExecute = sqlToExecute.trim();
-        }
         statement = connection.createStatement();
 
         // fetch n+1 rows in order to indicate there's more rows available (for large selects)

@@ -470,7 +470,7 @@ public class IPyFlinkInterpreterTest extends IPythonInterpreterTest {
     InterpreterContext context = InterpreterContext.builder()
             .setNoteId("noteId")
             .setParagraphId("paragraphId")
-            .setInterpreterOut(new InterpreterOutput())
+            .setInterpreterOut(new InterpreterOutput(null))
             .setIntpEventClient(mock(RemoteInterpreterEventClient.class))
             .setAngularObjectRegistry(angularObjectRegistry)
             .build();
@@ -482,7 +482,7 @@ public class IPyFlinkInterpreterTest extends IPythonInterpreterTest {
     InterpreterContext context = InterpreterContext.builder()
             .setNoteId("noteId")
             .setParagraphId("paragraphId")
-            .setInterpreterOut(new InterpreterOutput())
+            .setInterpreterOut(new InterpreterOutput(null))
             .setAngularObjectRegistry(angularObjectRegistry)
             .setIntpEventClient(mock(RemoteInterpreterEventClient.class))
             .build();

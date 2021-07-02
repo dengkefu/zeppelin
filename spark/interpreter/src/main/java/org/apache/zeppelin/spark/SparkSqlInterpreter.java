@@ -115,23 +115,14 @@ public class SparkSqlInterpreter extends AbstractInterpreter {
           context.out.flush();
           return new InterpreterResult(Code.ERROR);
         } else {
-          LOGGER.error("Error happens in sql: {}", curSql, e);
           context.out.write("\nError happens in sql: " + curSql + "\n");
           if (Boolean.parseBoolean(getProperty("zeppelin.spark.sql.stacktrace", "false"))) {
-            if (e.getCause() != null) {
-              context.out.write(ExceptionUtils.getStackTrace(e.getCause()));
-            } else {
-              context.out.write(ExceptionUtils.getStackTrace(e));
-            }
+            context.out.write(ExceptionUtils.getStackTrace(e.getCause()));
           } else {
-            StringBuilder msgBuilder = new StringBuilder();
-            if (e.getCause() != null) {
-              msgBuilder.append(e.getCause().getMessage());
-            } else {
-              msgBuilder.append(e.getMessage());
-            }
-            msgBuilder.append("\nset zeppelin.spark.sql.stacktrace = true to see full stacktrace");
-            context.out.write(msgBuilder.toString());
+            LOGGER.error("Invocation target exception", e);
+            String msg = e.getCause().getMessage()
+                    + "\nset zeppelin.spark.sql.stacktrace = true to see full stacktrace";
+            context.out.write(msg);
           }
           context.out.flush();
           return new InterpreterResult(Code.ERROR);

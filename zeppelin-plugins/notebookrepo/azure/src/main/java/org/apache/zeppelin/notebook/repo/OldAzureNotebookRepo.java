@@ -25,9 +25,10 @@ import com.microsoft.azure.storage.file.CloudFileDirectory;
 import com.microsoft.azure.storage.file.CloudFileShare;
 import com.microsoft.azure.storage.file.ListFileItem;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.zeppelin.conf.ZeppelinConfiguration;
 import org.apache.zeppelin.notebook.Note;
+import org.apache.zeppelin.notebook.NoteInfo;
 import org.apache.zeppelin.notebook.OldNoteInfo;
 import org.apache.zeppelin.user.AuthenticationInfo;
 import org.slf4j.Logger;
@@ -59,7 +60,6 @@ public class OldAzureNotebookRepo implements OldNotebookRepo {
 
   }
 
-  @Override
   public void init(ZeppelinConfiguration conf) throws IOException {
     this.conf = conf;
     user = conf.getString(ZeppelinConfiguration.ConfVars.ZEPPELIN_NOTEBOOK_AZURE_USER);

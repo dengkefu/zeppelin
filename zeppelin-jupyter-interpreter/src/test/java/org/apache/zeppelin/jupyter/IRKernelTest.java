@@ -152,7 +152,7 @@ public class IRKernelTest {
     InterpreterContext context = InterpreterContext.builder()
             .setNoteId("note_1")
             .setParagraphId("paragraph_1")
-            .setInterpreterOut(new InterpreterOutput())
+            .setInterpreterOut(new InterpreterOutput(null))
             .setLocalProperties(localProperties)
             .build();
     return context;

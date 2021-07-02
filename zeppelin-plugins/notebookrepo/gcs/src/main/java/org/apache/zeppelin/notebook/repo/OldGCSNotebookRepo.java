@@ -27,12 +27,15 @@ import com.google.cloud.storage.Storage.BlobListOption;
 import com.google.cloud.storage.StorageException;
 import com.google.cloud.storage.StorageOptions;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.gson.JsonParseException;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.zeppelin.conf.ZeppelinConfiguration;
 import org.apache.zeppelin.conf.ZeppelinConfiguration.ConfVars;
 import org.apache.zeppelin.notebook.Note;
+import org.apache.zeppelin.notebook.NoteInfo;
 import org.apache.zeppelin.notebook.OldNoteInfo;
 import org.apache.zeppelin.user.AuthenticationInfo;
 import org.slf4j.Logger;
@@ -40,13 +43,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -66,7 +67,7 @@ import java.util.regex.Pattern;
  */
 public class OldGCSNotebookRepo implements OldNotebookRepo {
 
-  private static final Logger LOG = LoggerFactory.getLogger(OldGCSNotebookRepo.class);
+  private static final Logger LOG = LoggerFactory.getLogger(GCSNotebookRepo.class);
   private String encoding;
   private String bucketName;
   private Optional<String> basePath;
@@ -98,7 +99,7 @@ public class OldGCSNotebookRepo implements OldNotebookRepo {
 
     // pathComponents excludes empty string if trailing slash is present
     List<String> pathComponents = Arrays.asList(storageDirWithoutScheme.split("/"));
-    if (pathComponents.isEmpty()) {
+    if (pathComponents.size() < 1) {
       throw new IOException(String.format(
           "GCS storage directory '%s' must be in the form gs://bucketname/path/to/dir",
           gcsStorageDir));
@@ -108,7 +109,7 @@ public class OldGCSNotebookRepo implements OldNotebookRepo {
       this.basePath = Optional.of(StringUtils.join(
           pathComponents.subList(1, pathComponents.size()), "/"));
     } else {
-      this.basePath = Optional.empty();
+      this.basePath = Optional.absent();
     }
 
     // Notes are stored at gs://bucketName/basePath/<note-id>/note.json
@@ -188,7 +189,7 @@ public class OldGCSNotebookRepo implements OldNotebookRepo {
         .setContentType("application/json")
         .build();
     try {
-      storage.create(info, note.toJson().getBytes(StandardCharsets.UTF_8));
+      storage.create(info, note.toJson().getBytes("UTF-8"));
     } catch (StorageException se) {
       throw new IOException("Could not write " + info.toString() + ": " + se.getMessage(), se);
     }
@@ -196,7 +197,7 @@ public class OldGCSNotebookRepo implements OldNotebookRepo {
 
   @Override
   public void remove(String noteId, AuthenticationInfo subject) throws IOException {
-    Preconditions.checkArgument(StringUtils.isNotEmpty(noteId));
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(noteId));
     BlobId blobId = makeBlobId(noteId);
     try {
       boolean deleted = storage.delete(blobId);

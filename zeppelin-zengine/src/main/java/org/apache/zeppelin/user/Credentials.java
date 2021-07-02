@@ -52,7 +52,7 @@ public class Credentials {
    */
   public Credentials(ZeppelinConfiguration conf) {
     credentialsMap = new HashMap<>();
-    if (conf.credentialsPersist()) {
+    if (conf.credentialsPersist().booleanValue()) {
       String encryptKey = conf.getCredentialsEncryptKey();
       if (StringUtils.isNotBlank(encryptKey)) {
         this.encryptor = new Encryptor(encryptKey);

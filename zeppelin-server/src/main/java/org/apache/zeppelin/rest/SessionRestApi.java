@@ -18,10 +18,7 @@
 package org.apache.zeppelin.rest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.zeppelin.actionLog.LoggerDetail;
-import org.apache.zeppelin.actionLog.UserLogger;
 import org.apache.zeppelin.annotation.ZeppelinApi;
-import org.apache.zeppelin.entity.log.OperationType;
 import org.apache.zeppelin.interpreter.InterpreterSettingManager;
 import org.apache.zeppelin.notebook.Notebook;
 import org.apache.zeppelin.common.SessionInfo;
@@ -92,8 +89,6 @@ public class SessionRestApi {
    * @throws Exception
    */
   @POST
-  @UserLogger
-  @LoggerDetail(detail = "为解释器创建一个session服务", params = "", level = 3, operationType = OperationType.INSERT, obj = "INTERPRETER")
   public Response createSession(@QueryParam("interpreter") String interpreter) throws Exception {
     LOGGER.info("Create new session for interpreter: {}", interpreter);
     SessionInfo sessionInfo = sessionManagerService.createSession(interpreter);
@@ -108,8 +103,6 @@ public class SessionRestApi {
    */
   @DELETE
   @Path("{sessionId}")
-  @UserLogger
-  @LoggerDetail(detail = "删除视图解释器的session服务", params = "", level = 5, operationType = OperationType.DELETE, obj = "INTERPRETER")
   public Response stopSession(@PathParam("sessionId") String sessionId) {
     LOGGER.info("Stop session: {}", sessionId);
     try {

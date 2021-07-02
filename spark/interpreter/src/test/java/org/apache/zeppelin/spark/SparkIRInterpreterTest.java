@@ -54,7 +54,6 @@ public class SparkIRInterpreterTest extends IRInterpreterTest {
     return new SparkIRInterpreter(properties);
   }
 
-  @Override
   @Before
   public void setUp() throws InterpreterException {
     Properties properties = new Properties();
@@ -145,7 +144,7 @@ public class SparkIRInterpreterTest extends IRInterpreterTest {
     InterpreterContext context = InterpreterContext.builder()
             .setNoteId("note_1")
             .setParagraphId("paragraph_1")
-            .setInterpreterOut(new InterpreterOutput())
+            .setInterpreterOut(new InterpreterOutput(null))
             .setLocalProperties(new HashMap<>())
             .setIntpEventClient(mockRemoteIntpEventClient)
             .build();
